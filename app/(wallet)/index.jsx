@@ -323,7 +323,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
   },
   header: {
     alignItems: 'center',

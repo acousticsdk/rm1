@@ -153,9 +153,7 @@ export default function WalletScreen() {
           <View style={styles.transactionIndicator} />
         </View>
         <View style={styles.transactionInfo}>
-          <Text style={styles.transactionName}>
-            {item.name} ({item.specialization})
-          </Text>
+          <Text style={styles.transactionName}>{item.name}</Text>
           <Text style={styles.transactionTime}>{item.time}</Text>
         </View>
       </View>

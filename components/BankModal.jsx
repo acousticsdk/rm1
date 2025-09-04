@@ -103,6 +103,11 @@ export default function BankModal({ visible, onClose }) {
               <View style={styles.handleBar} />
             </View>
 
+            {/* Bank Title */}
+            <View style={styles.bankTitleContainer}>
+              <Text style={styles.bankTitle}>БАНК</Text>
+            </View>
+
             <View style={styles.content}>
               {/* Bank Section */}
               <View style={styles.bankSection}>
@@ -213,11 +218,6 @@ export default function BankModal({ visible, onClose }) {
             </View>
           </View>
         </TouchableWithoutFeedback>
-          {/* Bank Title */}
-          <View style={styles.bankTitleContainer}>
-            <Text style={styles.bankTitle}>БАНК</Text>
-          </View>
-
       </ImageBackground>
     </Modal>
   );

@@ -50,6 +50,14 @@ export default function FinancialManagerModal({ visible, onClose }) {
         message={notification.message}
         onHide={hideNotification}
       />
+    <>
+      <Notification
+        visible={notification.visible}
+        type={notification.type}
+        title={notification.title}
+        message={notification.message}
+        onHide={hideNotification}
+      />
       <Modal
       visible={visible}
       transparent={true}
@@ -97,6 +105,7 @@ export default function FinancialManagerModal({ visible, onClose }) {
           </View>
         </View>
       </BlurView>
+    </>
     </Modal>
     </>
   );

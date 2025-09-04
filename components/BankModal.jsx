@@ -125,11 +125,11 @@ export default function BankModal({ visible, onClose }) {
                   
                   {/* Кнопки выбора валюты */}
                   <Animated.View style={[styles.currencyButtonsContainer, animatedDropdownStyle]}>
-                    <View style={styles.currencyButtonsRow}>
+                    <View style={styles.currencyButtonsRowSingle}>
                       <TouchableOpacity 
                         style={[
-                          styles.currencyButton, 
-                          styles.currencyButtonHalf,
+                          styles.currencyButton,
+                          styles.currencyButtonThird,
                           selectedCurrency === 'EURO' && styles.currencyButtonSelected
                         ]}
                         onPress={() => handleCurrencySelect('EURO')}
@@ -144,8 +144,8 @@ export default function BankModal({ visible, onClose }) {
                       
                       <TouchableOpacity 
                         style={[
-                          styles.currencyButton, 
-                          styles.currencyButtonHalf,
+                          styles.currencyButton,
+                          styles.currencyButtonThird,
                           selectedCurrency === 'PLN' && styles.currencyButtonSelected
                         ]}
                         onPress={() => handleCurrencySelect('PLN')}
@@ -157,23 +157,23 @@ export default function BankModal({ visible, onClose }) {
                           PLN
                         </Text>
                       </TouchableOpacity>
+                      
+                      <TouchableOpacity 
+                        style={[
+                          styles.currencyButton,
+                          styles.currencyButtonThird,
+                          selectedCurrency === 'USD' && styles.currencyButtonSelected
+                        ]}
+                        onPress={() => handleCurrencySelect('USD')}
+                      >
+                        <Text style={[
+                          styles.currencyButtonText,
+                          selectedCurrency === 'USD' && styles.currencyButtonTextSelected
+                        ]}>
+                          USD
+                        </Text>
+                      </TouchableOpacity>
                     </View>
-                    
-                    <TouchableOpacity 
-                      style={[
-                        styles.currencyButton, 
-                        styles.currencyButtonFull,
-                        selectedCurrency === 'USD' && styles.currencyButtonSelected
-                      ]}
-                      onPress={() => handleCurrencySelect('USD')}
-                    >
-                      <Text style={[
-                        styles.currencyButtonText,
-                        selectedCurrency === 'USD' && styles.currencyButtonTextSelected
-                      ]}>
-                        USD
-                      </Text>
-                    </TouchableOpacity>
                   </Animated.View>
                 </View>
               </View>
@@ -326,6 +326,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 15,
   },
+  currencyButtonsRowSingle: {
+    flexDirection: 'row',
+    gap: 15,
+  },
   currencyButton: {
     borderWidth: 1,
     borderColor: '#666666',
@@ -337,6 +341,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   currencyButtonHalf: {
+    flex: 1,
+  },
+  currencyButtonThird: {
     flex: 1,
   },
   currencyButtonFull: {

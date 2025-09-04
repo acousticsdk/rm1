@@ -335,16 +335,19 @@ export default function WalletScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000000',
-  },
   backgroundImage: {
     flex: 1,
+    width: '100%',
+    height: '100%',
+    backgroundColor: '#070707',
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'transparent',
   },
   header: {
     alignItems: 'center',
-    paddingTop: 80,
+    paddingTop: 70,
     paddingBottom: 40,
   },
   titleContainer: {

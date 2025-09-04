@@ -80,17 +80,17 @@ export default function SupportScreen() {
 
           <View style={styles.spacer} />
 
-          {/* Close Button */}
-          <View style={styles.closeButtonContainer}>
-            <Button 
-              title="ЗАКРЫТЬ" 
-              onPress={handleBack}
-              variant="primary"
-            />
-          </View>
-
           <View style={styles.bottomSpacing} />
         </ScrollView>
+        
+        {/* Close Button - Fixed at bottom */}
+        <View style={styles.closeButtonContainer}>
+          <Button 
+            title="ЗАКРЫТЬ" 
+            onPress={handleBack}
+            variant="primary"
+          />
+        </View>
       </View>
     </ImageBackground>
   );
@@ -180,9 +180,12 @@ const styles = StyleSheet.create({
   closeButtonContainer: {
     paddingHorizontal: 24,
     paddingBottom: 40,
-    backgroundColor: 'transparent',
+    paddingTop: 20,
   },
   bottomSpacing: {
-    height: 200,
+    height: 20,
+  },
+  spacer: {
+    flex: 1,
   },
 });

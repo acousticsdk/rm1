@@ -205,7 +205,8 @@ const styles = StyleSheet.create({
   backButton: {
     position: 'absolute',
     left: 24,
-    top: 15,
+    top: '50%',
+    transform: [{ translateY: -12 }],
     width: 40,
     height: 40,
     alignItems: 'center',

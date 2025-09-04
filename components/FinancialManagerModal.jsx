@@ -25,8 +25,8 @@ export default function FinancialManagerModal({ visible, onClose }) {
     // Данные доступны в переменной: FINANCIAL_MANAGER_REQUEST_SENT
     
     console.log('Заявка на связь с финансовым менеджером отправлена');
-    // Просто закрываем модалку финансового менеджера, возвращаемся к банковской
-    onClose();
+    // Закрываем все модалки полностью
+    onComplete();
   };
 
   const handleCancel = () => {

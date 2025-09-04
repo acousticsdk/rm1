@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(0, 0, 0, 0)',
   },
   header: {
     alignItems: 'center',

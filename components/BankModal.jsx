@@ -17,6 +17,7 @@ import Animated, {
   withTiming
 } from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
+import FinancialManagerModal from './FinancialManagerModal';
 
 // Глобальные переменные для интеграции с бекендом
 let BANK_SELECTED_CURRENCY = 'EURO';
@@ -25,6 +26,7 @@ let BANK_WITHDRAWAL_AMOUNT = '900';
 export default function BankModal({ visible, onClose }) {
   const [selectedCurrency, setSelectedCurrency] = useState('EURO');
   const [withdrawalAmount, setWithdrawalAmount] = useState('900');
+  const [financialManagerModalVisible, setFinancialManagerModalVisible] = useState(false);
   
   const dropdownHeight = useSharedValue(0);
   const dropdownOpacity = useSharedValue(0);
@@ -46,13 +48,8 @@ export default function BankModal({ visible, onClose }) {
     BANK_SELECTED_CURRENCY = selectedCurrency;
     BANK_WITHDRAWAL_AMOUNT = withdrawalAmount;
     
-    // TODO: Здесь будет логика вывода средств
-    // Данные доступны в переменных:
-    // - BANK_SELECTED_CURRENCY
-    // - BANK_WITHDRAWAL_AMOUNT
-    
-    console.log(`Вывод ${withdrawalAmount} ${selectedCurrency}`);
-    onClose();
+    // Показываем модалку с финансовым менеджером
+    setFinancialManagerModalVisible(true);
   };
 
   const openDropdown = () => {
@@ -219,6 +216,15 @@ export default function BankModal({ visible, onClose }) {
           </View>
         </TouchableWithoutFeedback>
       </ImageBackground>
+      
+      {/* Financial Manager Modal */}
+      <FinancialManagerModal
+        visible={financialManagerModalVisible}
+        onClose={() => {
+          setFinancialManagerModalVisible(false);
+          onClose(); // Закрываем и основную модалку банка
+        }}
+      />
     </Modal>
   );
 }

@@ -3,18 +3,15 @@ import {
   View, 
   Text, 
   StyleSheet, 
-  SafeAreaView, 
   ScrollView,
   TouchableOpacity,
   Image,
-  Dimensions,
-  ImageBackground
+  Dimensions
 } from 'react-native';
-import { router } from 'expo-router';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
-import { BankIcon, CryptoIcon } from '@/components/ui/Icons';
+import { BankIcon, CryptoIcon } from '../components/ui/Icons';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -99,13 +96,13 @@ export default function WalletScreen() {
   const [teamStartIndex, setTeamStartIndex] = useState(0);
 
   const handleBankWithdraw = () => {
-    // TODO: Логика вывода на банк
-    console.log('Вывод на банк');
+    // TODO: Логика пополнения через банк
+    console.log('Пополнение через банк');
   };
 
   const handleCryptoWithdraw = () => {
-    // TODO: Логика вывода на крипту
-    console.log('Вывод на крипту');
+    // TODO: Логика пополнения через крипту
+    console.log('Пополнение через крипту');
   };
 
   const handleViewMoreTeam = () => {
@@ -132,6 +129,7 @@ export default function WalletScreen() {
   const getVisibleTeamMembers = () => {
     return teamMembers.slice(teamStartIndex, teamStartIndex + 3);
   };
+
   const renderTeamMember = ({ item, index }) => (
     <View key={item.id} style={styles.teamMemberWrapper}>
       <View style={styles.teamMember}>
@@ -160,163 +158,164 @@ export default function WalletScreen() {
   );
 
   return (
-    <ImageBackground 
-      source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
-      style={styles.backgroundImage}
-      resizeMode="cover"
-    >
-      <SafeAreaView style={styles.safeArea}>
-        <View style={styles.container}>
-        <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>КОШЕЛЕК</Text>
-            </View>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>КОШЕЛЕК</Text>
           </View>
+        </View>
 
-          {/* Main Balance */}
-          <View style={styles.balanceContainer}>
-            <View style={styles.gradientTextContainer}>
-              <Svg height="80" width="300">
-                <Defs>
-                  <SvgLinearGradient id="balanceGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <Stop offset="0%" stopColor="#FFFFFF" />
-                    <Stop offset="100%" stopColor="#28CEFF" />
-                  </SvgLinearGradient>
-                </Defs>
-                <SvgText
-                  fill="url(#balanceGrad)"
-                  fontSize="72"
-                  fontWeight="700"
-                  x="150"
-                  y="55"
-                  textAnchor="middle"
-                  dominantBaseline="middle"
-                  fontFamily="Codec-Pro-Bold"
-                >
-                  900$
-                </SvgText>
-              </Svg>
-            </View>
-            <Text style={styles.balanceSubtitle}>Расходы за 30 дней</Text>
+        {/* Main Balance */}
+        <View style={styles.balanceContainer}>
+          <View style={styles.gradientTextContainer}>
+            <Svg height="80" width="300">
+              <Defs>
+                <SvgLinearGradient id="balanceGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <Stop offset="0%" stopColor="#FFFFFF" />
+                  <Stop offset="100%" stopColor="#28CEFF" />
+                </SvgLinearGradient>
+              </Defs>
+              <SvgText
+                fill="url(#balanceGrad)"
+                fontSize="72"
+                fontWeight="700"
+                x="150"
+                y="55"
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontFamily="Codec-Pro-Bold"
+              >
+                900$
+              </SvgText>
+            </Svg>
           </View>
+         
+        </View>
 
-          {/* Stats Row */}
-          <View style={styles.statsContainer}>
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Заморожено</Text>
+        {/* Stats Row */}
+        <View style={styles.statsContainer}>
+          <View style={styles.statColumn}>
+            <Text style={styles.statLabelAbove}>Заморожено</Text>
+            <View style={styles.statItemWithPlate}>
               <Text style={styles.statValue}>{frozen}$</Text>
             </View>
-            
-            <View style={styles.statItemCenter}>
+          </View>
+          
+          <View style={styles.statColumn}>
+            <Text style={styles.statLabelAboveCenter}>Расходы за 30 дней</Text>
+            <LinearGradient
+              colors={['#151716', '#414242', '#151716']}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 0 }}
+              style={styles.statItemLargePlate}
+            >
               <Text style={styles.statValueCenter}>{monthlyExpenses.toLocaleString()}$</Text>
-            </View>
-            
-            <View style={styles.statItem}>
-              <Text style={styles.statLabel}>Все расходы</Text>
+            </LinearGradient>
+          </View>
+          
+          <View style={styles.statColumn}>
+            <Text style={styles.statLabelAbove}>Все расходы</Text>
+            <View style={styles.statItemWithPlate}>
               <Text style={styles.statValue}>{totalExpenses.toLocaleString()}$</Text>
             </View>
           </View>
+        </View>
 
-          {/* Withdrawal Methods */}
-          <View style={styles.withdrawalContainer}>
-            <TouchableOpacity style={styles.withdrawalMethod} onPress={handleBankWithdraw}>
-              <View style={styles.withdrawalIcon}>
-                <BankIcon size={32} color="#FFFFFF" />
-              </View>
-              <Text style={styles.withdrawalText}>БАНК</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.withdrawalMethod} onPress={handleCryptoWithdraw}>
-              <View style={styles.withdrawalIcon}>
-                <CryptoIcon size={32} color="#FFFFFF" />
-              </View>
-              <Text style={styles.withdrawalText}>КРИПТА</Text>
+        {/* Withdrawal Methods */}
+        <View style={styles.depositContainer}>
+          <TouchableOpacity style={styles.depositMethod} onPress={handleBankWithdraw}>
+            <View style={styles.depositIcon}>
+              <BankIcon size={32} color="#FFFFFF" />
+            </View>
+            <Text style={styles.depositText}>БАНК</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.depositMethod} onPress={handleCryptoWithdraw}>
+            <View style={styles.depositIcon}>
+              <CryptoIcon size={32} color="#FFFFFF" />
+            </View>
+            <Text style={styles.depositText}>КРИПТА</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Team Section */}
+        <View style={styles.teamSection}>
+          <View style={styles.teamHeader}>
+            <Text style={styles.teamTitle}>Команда</Text>
+            <TouchableOpacity onPress={handleViewMoreTeam}>
+              <Text style={styles.teamMore}>Еще..</Text>
             </TouchableOpacity>
           </View>
-
-          {/* Team Section */}
-          <View style={styles.teamSection}>
-            <View style={styles.teamHeader}>
-              <Text style={styles.teamTitle}>Команда</Text>
-              <TouchableOpacity onPress={handleViewMoreTeam}>
-                <Text style={styles.teamMore}>Еще..</Text>
-              </TouchableOpacity>
-            </View>
+          
+          <View style={styles.teamScrollContainer}>
+            <TouchableOpacity 
+              style={[
+                styles.teamNavButton,
+                teamStartIndex === 0 && styles.teamNavButtonDisabled
+              ]}
+              onPress={handleTeamPrevious}
+              disabled={teamStartIndex === 0}
+            >
+              <ChevronLeft size={20} color="#666666" />
+            </TouchableOpacity>
             
-            <View style={styles.teamScrollContainer}>
-              <TouchableOpacity 
-                style={[
-                  styles.teamNavButton,
-                  teamStartIndex === 0 && styles.teamNavButtonDisabled
-                ]}
-                onPress={handleTeamPrevious}
-                disabled={teamStartIndex === 0}
-              >
-                <ChevronLeft size={20} color="#666666" />
-              </TouchableOpacity>
-              
-              <View style={styles.teamScrollView}>
-                {getVisibleTeamMembers().map((item, index) => (
-                  <View key={item.id} style={styles.teamMemberWrapper}>
-                    {renderTeamMember({ item, index })}
-                  </View>
-                ))}
-              </View>
-              
-              <TouchableOpacity 
-                style={[
-                  styles.teamNavButton,
-                  teamStartIndex + 3 >= teamMembers.length && styles.teamNavButtonDisabled
-                ]}
-                onPress={handleTeamNext}
-                disabled={teamStartIndex + 3 >= teamMembers.length}
-              >
-                <ChevronRight size={20} color="#666666" />
-              </TouchableOpacity>
-            </View>
-          </View>
-
-          {/* Recent Transactions */}
-          <View style={styles.transactionsSection}>
-            <Text style={styles.transactionsTitle}>Последние операции</Text>
-            
-            <View style={styles.transactionsList}>
-              {transactions.map((item) => (
-                <View key={item.id}>
-                  {renderTransaction({ item })}
+            <View style={styles.teamScrollView}>
+              {getVisibleTeamMembers().map((item, index) => (
+                <View key={item.id} style={styles.teamMemberWrapper}>
+                  {renderTeamMember({ item, index })}
                 </View>
               ))}
             </View>
+            
+            <TouchableOpacity 
+              style={[
+                styles.teamNavButton,
+                teamStartIndex + 3 >= teamMembers.length && styles.teamNavButtonDisabled
+              ]}
+              onPress={handleTeamNext}
+              disabled={teamStartIndex + 3 >= teamMembers.length}
+            >
+              <ChevronRight size={20} color="#666666" />
+            </TouchableOpacity>
           </View>
+        </View>
 
-          <View style={styles.bottomSpacing} />
-        </ScrollView>
-      </View>
-    </SafeAreaView>
-    </ImageBackground>
+        {/* Recent Transactions */}
+        <View style={styles.transactionsSection}>
+          <Text style={styles.transactionsTitle}>Последние операции</Text>
+          
+          <View style={styles.transactionsList}>
+            {transactions.map((item) => (
+              <View key={item.id}>
+                {renderTransaction({ item })}
+              </View>
+            ))}
+          </View>
+        </View>
+
+        <View style={styles.bottomSpacing} />
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
+  container: {
     flex: 1,
+    backgroundColor: '#000000',
   },
   safeArea: {
     flex: 1,
-    backgroundColor: '#070707',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#070707',
+    paddingTop: 80,
   },
   scrollView: {
     flex: 1,
   },
   header: {
     alignItems: 'center',
-    paddingTop: 20,
+    paddingTop: 60,
     paddingBottom: 40,
   },
   titleContainer: {
@@ -335,7 +334,7 @@ const styles = StyleSheet.create({
   },
   balanceContainer: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 20,
   },
   gradientTextContainer: {
     alignItems: 'center',
@@ -352,34 +351,45 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: 24,
     marginBottom: 40,
-    gap: 12,
-  },
-  statItem: {
-    flex: 1,
-    backgroundColor: '#1a1a1a',
-    borderRadius: 25,
-    paddingVertical: 16,
-    paddingHorizontal: 16,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#333333',
+    justifyContent: 'space-between',
   },
-  statItemCenter: {
-    flex: 1,
-    backgroundColor: '#1a1a1a',
-    borderRadius: 25,
-    paddingVertical: 20,
-    paddingHorizontal: 16,
+  statColumn: {
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#333333',
   },
-  statLabel: {
+  statLabelAbove: {
     color: '#787878',
-    fontSize: 12,
+    fontSize: 14,
     fontFamily: 'Codec-Pro-News',
-    marginBottom: 8,
+    marginBottom: 12,
     textAlign: 'center',
+  },
+  statLabelAboveCenter: {
+    color: '#787878',
+    fontSize: 16,
+    fontFamily: 'Codec-Pro-News',
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  statItemWithPlate: {
+    width: 100,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 25,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#333333',
+  },
+  statItemLargePlate: {
+    width: 140,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 35,
+    paddingVertical: 16,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#333333',
   },
   statValue: {
     color: '#FFFFFF',
@@ -389,21 +399,21 @@ const styles = StyleSheet.create({
   },
   statValueCenter: {
     color: '#FFFFFF',
-    fontSize: 20,
+    fontSize: 24,
     fontFamily: 'Codec-Pro-Bold',
     textAlign: 'center',
   },
-  withdrawalContainer: {
+  depositContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     gap: 40,
     marginBottom: 50,
   },
-  withdrawalMethod: {
+  depositMethod: {
     alignItems: 'center',
     gap: 12,
   },
-  withdrawalIcon: {
+  depositIcon: {
     width: 80,
     height: 80,
     borderRadius: 40,
@@ -413,7 +423,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#333333',
   },
-  withdrawalText: {
+  depositText: {
     color: '#FFFFFF',
     fontSize: 14,
     fontFamily: 'Codec-Pro-Bold',
@@ -527,6 +537,7 @@ const styles = StyleSheet.create({
   },
   transactionInfo: {
     flex: 1,
+    marginLeft: 16,
   },
   transactionName: {
     color: '#FFFFFF',

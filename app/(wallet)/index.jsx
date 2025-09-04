@@ -459,7 +459,6 @@ const styles = StyleSheet.create({
   },
   teamMemberWrapper: {
     width: 80,
-    marginRight: 16,
   },
   teamMember: {
     alignItems: 'center',

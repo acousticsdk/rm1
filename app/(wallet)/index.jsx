@@ -158,8 +158,7 @@ export default function WalletScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.titleContainer}>
@@ -296,8 +295,7 @@ export default function WalletScreen() {
         </View>
 
         <View style={styles.bottomSpacing} />
-      </ScrollView>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -306,16 +304,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
-  safeArea: {
-    flex: 1,
-    paddingTop: 80,
-  },
-  scrollView: {
-    flex: 1,
-  },
   header: {
     alignItems: 'center',
-    paddingTop: 60,
+    paddingTop: 80,
     paddingBottom: 40,
   },
   titleContainer: {

@@ -21,93 +21,41 @@ const MOCK_SERVICES = [
     id: 1,
     title: 'РАЗРАБОТКА ДИЗАЙНА ПОД КЛЮЧ',
     price: 'ОТ 100$',
-    page: 1
   },
   {
     id: 2,
     title: 'ЛЕНДИНГ',
     price: 'ОТ 100$',
-    page: 1
   },
   {
     id: 3,
     title: 'ПРИ-ЛЕНДИНГ',
     price: 'ОТ 100$',
-    page: 1
   },
   {
     id: 4,
     title: 'МНОГОСТРАНИЧНЫЙ САЙТ',
     price: 'ОТ 100$',
-    page: 1
   },
   {
     id: 5,
     title: 'БАННЕРА',
     price: 'ОТ 100$',
-    page: 1
   },
   {
     id: 6,
     title: 'ВИДЕО МОНТАЖ',
     price: 'ОТ 150$',
-    page: 2
   },
   {
     id: 7,
-    title: 'АНИМАЦИЯ',
-    price: 'ОТ 200$',
-    page: 2
-  },
-  {
-    id: 8,
-    title: 'СЪЕМКА КОНТЕНТА',
-    price: 'ОТ 300$',
-    page: 2
-  },
-  {
-    id: 9,
-    title: 'ФОТОСЕССИЯ',
-    price: 'ОТ 250$',
-    page: 2
-  },
-  {
-    id: 10,
     title: 'МИНИ-АППКА',
     price: 'ОТ 100$',
-    page: 2
-  },
-  {
-    id: 11,
-    title: 'WEB РАЗРАБОТКА',
-    price: 'ОТ 500$',
-    page: 3
-  },
-  {
-    id: 12,
-    title: 'МОБИЛЬНЫЕ ПРИЛОЖЕНИЯ',
-    price: 'ОТ 800$',
-    page: 3
-  },
-  {
-    id: 13,
-    title: 'БРЕНДИНГ',
-    price: 'ОТ 300$',
-    page: 3
-  },
-  {
-    id: 14,
-    title: 'КОПИРАЙТИНГ',
-    price: 'ОТ 50$',
-    page: 3
-  },
-  {
-    id: 15,
-    title: 'КОНСУЛЬТАЦИИ',
-    price: 'ОТ 100$',
-    page: 3
   }
 ];
+
+// Константы для пагинации
+const SERVICES_PER_PAGE = 5;
 
 export default function ServicesScreen() {
   const [services, setServices] = useState(MOCK_SERVICES);
@@ -138,8 +86,22 @@ export default function ServicesScreen() {
     SERVICES_CURRENT_PAGE = page;
   };
 
+  // Динамическое разбиение на страницы
   const getServicesForPage = (page) => {
-    return services.filter(service => service.page === page);
+    const startIndex = (page - 1) * SERVICES_PER_PAGE;
+    const endIndex = startIndex + SERVICES_PER_PAGE;
+    return services.slice(startIndex, endIndex);
+  };
+
+  // Вычисляем общее количество страниц
+  const getTotalPages = () => {
+    return Math.ceil(services.length / SERVICES_PER_PAGE);
+  };
+
+  // Генерируем массив номеров страниц
+  const getPageNumbers = () => {
+    const totalPages = getTotalPages();
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
   };
 
   const renderServiceItem = (service) => (
@@ -181,50 +143,23 @@ export default function ServicesScreen() {
 
           {/* Pagination */}
           <View style={styles.paginationContainer}>
-            <TouchableOpacity 
-              style={[
-                styles.pageButton,
-                currentPage === 1 && styles.activePageButton
-              ]}
-              onPress={() => handlePagePress(1)}
-            >
-              <Text style={[
-                styles.pageButtonText,
-                currentPage === 1 && styles.activePageButtonText
-              ]}>
-                1
-              </Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={[
-                styles.pageButton,
-                currentPage === 2 && styles.activePageButton
-              ]}
-              onPress={() => handlePagePress(2)}
-            >
-              <Text style={[
-                styles.pageButtonText,
-                currentPage === 2 && styles.activePageButtonText
-              ]}>
-                2
-              </Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity 
-              style={[
-                styles.pageButton,
-                currentPage === 3 && styles.activePageButton
-              ]}
-              onPress={() => handlePagePress(3)}
-            >
-              <Text style={[
-                styles.pageButtonText,
-                currentPage === 3 && styles.activePageButtonText
-              ]}>
-                3
-              </Text>
-            </TouchableOpacity>
+            {getPageNumbers().map((pageNumber) => (
+              <TouchableOpacity 
+                key={pageNumber}
+                style={[
+                  styles.pageButton,
+                  currentPage === pageNumber && styles.activePageButton
+                ]}
+                onPress={() => handlePagePress(pageNumber)}
+              >
+                <Text style={[
+                  styles.pageButtonText,
+                  currentPage === pageNumber && styles.activePageButtonText
+                ]}>
+                  {pageNumber}
+                </Text>
+              </TouchableOpacity>
+            ))}
           </View>
 
           <View style={styles.spacer} />

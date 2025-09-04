@@ -66,6 +66,24 @@ const WalletInput = React.memo(({ value, onChangeText }) => (
   />
 ));
 
+const NetworkInput = React.memo(({ value, onChangeText }) => (
+  <TextInput
+    style={styles.networkInput}
+    value={value}
+    onChangeText={onChangeText}
+    placeholder="TRC-20"
+    placeholderTextColor="#666666"
+    autoFocus={false}
+    blurOnSubmit={false}
+    {...(Platform.OS === 'web' && {
+      onFocus: (e) => {
+        // Предотвращаем потерю фокуса на веб
+        e.target.style.outline = 'none';
+      }
+    })}
+  />
+));
+
 export default function CryptoModal({ visible, onClose, onSuccess }) {
   const [withdrawalAmount, setWithdrawalAmount] = useState('900');
   const [withdrawalMethod, setWithdrawalMethod] = useState('USDT');
@@ -73,7 +91,6 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
   const [walletAddress, setWalletAddress] = useState('');
   const [financialManagerModalVisible, setFinancialManagerModalVisible] = useState(false);
   const [methodDropdownOpen, setMethodDropdownOpen] = useState(false);
-  const [networkDropdownOpen, setNetworkDropdownOpen] = useState(false);
 
   const handleMethodSelect = (method) => {
     setWithdrawalMethod(method);
@@ -81,9 +98,8 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
     CRYPTO_WITHDRAWAL_METHOD = method;
   };
 
-  const handleNetworkSelect = (selectedNetwork) => {
+  const handleNetworkChange = (selectedNetwork) => {
     setNetwork(selectedNetwork);
-    setNetworkDropdownOpen(false);
     CRYPTO_NETWORK = selectedNetwork;
   };
 
@@ -153,7 +169,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
               <Text style={styles.cryptoTitle}>КРИПТО</Text>
             </View>
 
-            <View style={styles.content}>
+            <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
               {/* Crypto Section */}
               <View style={styles.cryptoSection}>
                 {/* Amount Section */}
@@ -221,54 +237,10 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                 {/* Network Section */}
                 <View style={styles.networkSection}>
                   <Text style={styles.networkLabel}>Сеть</Text>
-                  
-                  <View style={styles.networkSectionContainer}>
-                    <TouchableOpacity style={styles.networkDropdown} onPress={() => setNetworkDropdownOpen(!networkDropdownOpen)}>
-                      <Text style={styles.networkDropdownText}>
-                        {network}
-                      </Text>
-                      <ChevronDown size={20} color="#666666" />
-                    </TouchableOpacity>
-                    
-                    {/* Кнопки выбора сети */}
-                    {networkDropdownOpen && (
-                    <View style={styles.networkButtonsContainer}>
-                      <View style={styles.networkButtonsRow}>
-                        <TouchableOpacity 
-                          style={[
-                            styles.networkButton,
-                            styles.networkButtonHalf,
-                            network === 'TRC-20' && styles.networkButtonSelected
-                          ]}
-                          onPress={() => handleNetworkSelect('TRC-20')}
-                        >
-                          <Text style={[
-                            styles.networkButtonText,
-                            network === 'TRC-20' && styles.networkButtonTextSelected
-                          ]}>
-                            TRC-20
-                          </Text>
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity 
-                          style={[
-                            styles.networkButton,
-                            styles.networkButtonHalf,
-                            network === 'ERC-20' && styles.networkButtonSelected
-                          ]}
-                          onPress={() => handleNetworkSelect('ERC-20')}
-                        >
-                          <Text style={[
-                            styles.networkButtonText,
-                            network === 'ERC-20' && styles.networkButtonTextSelected
-                          ]}>
-                            ERC-20
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                    )}
-                  </View>
+                  <NetworkInput 
+                    value={network}
+                    onChangeText={handleNetworkChange}
+                  />
                 </View>
 
                 {/* Wallet Address Section */}
@@ -298,7 +270,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                   </TouchableOpacity>
                 </View>
               </View>
-            </View>
+            </ScrollView>
 
             {/* Continue Button - Fixed at bottom */}
             <View style={styles.continueButtonContainer}>
@@ -584,6 +556,17 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'Codec-Pro-News',
     fontStyle: 'italic',
+  },
+  networkInput: {
+    borderWidth: 1,
+    borderColor: '#444444',
+    borderRadius: 15,
+    backgroundColor: '#131313',
+    paddingHorizontal: 25,
+    paddingVertical: 18,
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontFamily: 'Codec-Pro-News',
   },
   agreementSection: {
     marginBottom: 40,

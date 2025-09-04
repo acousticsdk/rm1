@@ -12,8 +12,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import Notification from '@/components/ui/Notification';
 import { useNotification } from '@/hooks/useNotification';
-import Notification from '@/components/ui/Notification';
-import { useNotification } from '@/hooks/useNotification';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -23,17 +21,12 @@ let FINANCIAL_MANAGER_REQUEST_SENT = false;
 export default function FinancialManagerModal({ visible, onClose }) {
   const { notification, showSuccess, hideNotification } = useNotification();
 
-  const { notification, showSuccess, hideNotification } = useNotification();
-
   const handleCreateRequest = () => {
     // Обновляем глобальную переменную
     FINANCIAL_MANAGER_REQUEST_SENT = true;
     
     // TODO: Здесь будет логика отправки заявки на связь с финансовым менеджером
     // Данные доступны в переменной: FINANCIAL_MANAGER_REQUEST_SENT
-    
-    // Показываем успешный нотификейшн
-    showSuccess('Заявка создана!', 'Финансовый менеджер свяжется с вами в течение 12 часов');
     
     // Показываем успешный нотификейшн
     showSuccess('Заявка создана!', 'Финансовый менеджер свяжется с вами в течение 12 часов');
@@ -49,14 +42,6 @@ export default function FinancialManagerModal({ visible, onClose }) {
   };
 
   return (
-    <>
-      <Notification
-        visible={notification.visible}
-        type={notification.type}
-        title={notification.title}
-        message={notification.message}
-        onHide={hideNotification}
-      />
     <>
       <Notification
         visible={notification.visible}

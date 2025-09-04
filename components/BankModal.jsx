@@ -213,6 +213,11 @@ export default function BankModal({ visible, onClose }) {
             </View>
           </View>
         </TouchableWithoutFeedback>
+          {/* Bank Title */}
+          <View style={styles.bankTitleContainer}>
+            <Text style={styles.bankTitle}>БАНК</Text>
+          </View>
+
       </ImageBackground>
     </Modal>
   );
@@ -359,5 +364,20 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontFamily: 'Codec-Pro-Bold',
+  },
+  bankTitleContainer: {
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  bankTitle: {
+    color: '#FFFFFF',
+    fontSize: 24,
+    fontFamily: 'Codec-Pro-Bold',
+    borderWidth: 2,
+    borderColor: '#FFFFFF',
+    borderRadius: 50,
+    paddingHorizontal: 40,
+    paddingVertical: 15,
+    backgroundColor: 'transparent',
   },
 });

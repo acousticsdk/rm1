@@ -6,12 +6,16 @@ import {
   ScrollView,
   TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
+  Modal,
+  TextInput,
+  ImageBackground
 } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import { BankIcon, CryptoIcon } from '../../components/ui/Icons';
+import Button from '../../components/ui/Button';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -24,6 +28,9 @@ let WALLET_TEAM_MEMBERS = [];
 let WALLET_RECENT_TRANSACTIONS = [];
 let WALLET_TEAM_START_INDEX = 0;
 
+// Глобальные переменные для банковской модалки
+let BANK_SELECTED_CURRENCY = 'EURO';
+let BANK_WITHDRAWAL_AMOUNT = '900';
 // Моковые данные команды
 const MOCK_TEAM = [
   {
@@ -94,15 +101,37 @@ export default function WalletScreen() {
   const [teamMembers] = useState(MOCK_TEAM);
   const [transactions] = useState(MOCK_TRANSACTIONS);
   const [teamStartIndex, setTeamStartIndex] = useState(0);
+  const [bankModalVisible, setBankModalVisible] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('EURO');
+  const [withdrawalAmount, setWithdrawalAmount] = useState('900');
 
   const handleBankWithdraw = () => {
-    // TODO: Логика пополнения через банк
-    console.log('Пополнение через банк');
+    setBankModalVisible(true);
   };
 
   const handleCryptoWithdraw = () => {
     // TODO: Логика пополнения через крипту
     console.log('Пополнение через крипту');
+  };
+
+  const handleBankModalClose = () => {
+    setBankModalVisible(false);
+  };
+
+  const handleCurrencySelect = (currency) => {
+    setSelectedCurrency(currency);
+    BANK_SELECTED_CURRENCY = currency;
+  };
+
+  const handleAmountChange = (amount) => {
+    setWithdrawalAmount(amount);
+    BANK_WITHDRAWAL_AMOUNT = amount;
+  };
+
+  const handleContinue = () => {
+    // TODO: Логика продолжения операции
+    console.log(`Вывод ${withdrawalAmount} ${selectedCurrency}`);
+    setBankModalVisible(false);
   };
 
   const handleViewMoreTeam = () => {
@@ -158,7 +187,12 @@ export default function WalletScreen() {
   );
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ImageBackground 
+      source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.titleContainer}>

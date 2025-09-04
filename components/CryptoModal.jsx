@@ -8,7 +8,8 @@ import {
   TextInput,
   ImageBackground,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Platform
 } from 'react-native';
 import { ChevronDown } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -35,6 +36,14 @@ const AmountInput = React.memo(({ value, onChangeText }) => (
       placeholder="900"
       placeholderTextColor="#FFFFFF80"
       keyboardType="numeric"
+      autoFocus={false}
+      blurOnSubmit={false}
+      {...(Platform.OS === 'web' && {
+        onFocus: (e) => {
+          // Предотвращаем потерю фокуса на веб
+          e.target.style.outline = 'none';
+        }
+      })}
     />
   </LinearGradient>
 ));
@@ -46,6 +55,14 @@ const WalletInput = React.memo(({ value, onChangeText }) => (
     onChangeText={onChangeText}
     placeholder="TLU34F...Gh3tH"
     placeholderTextColor="#666666"
+    autoFocus={false}
+    blurOnSubmit={false}
+    {...(Platform.OS === 'web' && {
+      onFocus: (e) => {
+        // Предотвращаем потерю фокуса на веб
+        e.target.style.outline = 'none';
+      }
+    })}
   />
 ));
 

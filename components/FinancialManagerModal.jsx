@@ -29,9 +29,9 @@ export default function FinancialManagerModal({ visible, onClose }) {
   };
 
   const handleCancel = () => {
-    // Принудительно перебрасываем на кошелек
-    router.push('/(wallet)');
-    onClose(); // Закрываем все модалки
+    // Просто закрываем модалку финансового менеджера
+    // Пользователь вернется к банковской модалке
+    onClose();
   };
 
   return (

@@ -92,7 +92,17 @@ export default function BankModal({ visible, onClose, onSuccess }) {
         source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
         style={styles.backgroundImage}
         resizeMode="cover"
-      >
+          onPress={(e) => {
+            // Не закрывать клавиатуру, если тап по самому инпуту
+            if (Platform.OS === 'web') {
+              if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                Keyboard.dismiss();
+              }
+            } else {
+              Keyboard.dismiss();
+            }
+          }}
+          accessible={false}
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View style={styles.container}>
             {/* Header */}

@@ -18,6 +18,25 @@ import FinancialManagerModal from './FinancialManagerModal';
 let BANK_SELECTED_CURRENCY = 'EURO';
 let BANK_WITHDRAWAL_AMOUNT = '900';
 
+// Мемоизированный компонент для инпута суммы - вынесен наружу
+const AmountInput = React.memo(({ value, onChangeText }) => (
+  <LinearGradient
+    colors={['#4A9EFF', '#0066FF']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.amountInputContainer}
+  >
+    <TextInput
+      style={styles.amountInput}
+      value={value}
+      onChangeText={onChangeText}
+      placeholder="900"
+      placeholderTextColor="#FFFFFF80"
+      keyboardType="numeric"
+    />
+  </LinearGradient>
+));
+
 export default function BankModal({ visible, onClose, onSuccess }) {
   const [selectedCurrency, setSelectedCurrency] = useState('EURO');
   const [withdrawalAmount, setWithdrawalAmount] = useState('900');
@@ -52,25 +71,6 @@ export default function BankModal({ visible, onClose, onSuccess }) {
       onClose();
     }, 100);
   };
-
-  // Мемоизированный компонент для инпута суммы
-  const AmountInput = React.memo(() => (
-    <LinearGradient
-      colors={['#4A9EFF', '#0066FF']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={styles.amountInputContainer}
-    >
-      <TextInput
-        style={styles.amountInput}
-        value={withdrawalAmount}
-        onChangeText={handleAmountChange}
-        placeholder="900"
-        placeholderTextColor="#FFFFFF80"
-        keyboardType="numeric"
-      />
-    </LinearGradient>
-  ));
 
   return (
     <Modal
@@ -173,7 +173,10 @@ export default function BankModal({ visible, onClose, onSuccess }) {
                 {/* Amount Section */}
                 <View style={styles.amountSection}>
                   <Text style={styles.amountLabel}>Сумма</Text>
-                  <AmountInput />
+                  <AmountInput 
+                    value={withdrawalAmount}
+                    onChangeText={handleAmountChange}
+                  />
                 </View>
               </View>
             </View>

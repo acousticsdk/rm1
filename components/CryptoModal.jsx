@@ -20,6 +20,35 @@ let CRYPTO_WITHDRAWAL_METHOD = 'USDT';
 let CRYPTO_NETWORK = 'TRC-20';
 let CRYPTO_WALLET_ADDRESS = '';
 
+// Мемоизированные компоненты для инпутов - вынесены наружу
+const AmountInput = React.memo(({ value, onChangeText }) => (
+  <LinearGradient
+    colors={['#4A9EFF', '#0066FF']}
+    start={{ x: 0, y: 0 }}
+    end={{ x: 1, y: 0 }}
+    style={styles.amountInputContainer}
+  >
+    <TextInput
+      style={styles.amountInput}
+      value={value}
+      onChangeText={onChangeText}
+      placeholder="900"
+      placeholderTextColor="#FFFFFF80"
+      keyboardType="numeric"
+    />
+  </LinearGradient>
+));
+
+const WalletInput = React.memo(({ value, onChangeText }) => (
+  <TextInput
+    style={styles.walletInput}
+    value={value}
+    onChangeText={onChangeText}
+    placeholder="TLU34F...Gh3tH"
+    placeholderTextColor="#666666"
+  />
+));
+
 export default function CryptoModal({ visible, onClose, onSuccess }) {
   const [withdrawalAmount, setWithdrawalAmount] = useState('900');
   const [withdrawalMethod, setWithdrawalMethod] = useState('USDT');
@@ -28,35 +57,6 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
   const [financialManagerModalVisible, setFinancialManagerModalVisible] = useState(false);
   const [methodDropdownOpen, setMethodDropdownOpen] = useState(false);
   const [networkDropdownOpen, setNetworkDropdownOpen] = useState(false);
-
-  // Мемоизированные компоненты для инпутов
-  const AmountInput = React.memo(() => (
-    <LinearGradient
-      colors={['#4A9EFF', '#0066FF']}
-      start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 0 }}
-      style={styles.amountInputContainer}
-    >
-      <TextInput
-        style={styles.amountInput}
-        value={withdrawalAmount}
-        onChangeText={handleAmountChange}
-        placeholder="900"
-        placeholderTextColor="#FFFFFF80"
-        keyboardType="numeric"
-      />
-    </LinearGradient>
-  ));
-
-  const WalletInput = React.memo(() => (
-    <TextInput
-      style={styles.walletInput}
-      value={walletAddress}
-      onChangeText={handleWalletAddressChange}
-      placeholder="TLU34F...Gh3tH"
-      placeholderTextColor="#666666"
-    />
-  ));
 
   const handleMethodSelect = (method) => {
     setWithdrawalMethod(method);
@@ -130,7 +130,10 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                 {/* Amount Section */}
                 <View style={styles.amountSection}>
                   <Text style={styles.amountLabel}>Сумма</Text>
-                  <AmountInput />
+                  <AmountInput 
+                    value={withdrawalAmount}
+                    onChangeText={handleAmountChange}
+                  />
                 </View>
 
                 {/* Withdrawal Method Section */}
@@ -243,7 +246,10 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                 <View style={styles.walletSection}>
                   <Text style={styles.walletLabel}>Кошелёк</Text>
                   <View style={styles.walletInputRow}>
-                    <WalletInput />
+                    <WalletInput 
+                      value={walletAddress}
+                      onChangeText={handleWalletAddressChange}
+                    />
                     <TouchableOpacity style={styles.checkWalletButton}>
                       <Text style={styles.checkWalletText}>ПРОВЕРИТЬ КОШЕЛЕК</Text>
                     </TouchableOpacity>

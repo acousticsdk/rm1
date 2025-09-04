@@ -289,9 +289,10 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     backgroundColor: '#131313',
     paddingHorizontal: 25,
-    gap: 15,
     overflow: 'hidden',
     marginTop: -10,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   currencyButtonsRowSingle: {
     flexDirection: 'row',

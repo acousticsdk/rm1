@@ -49,32 +49,62 @@ const MOCK_SERVICES = [
   },
   {
     id: 6,
-    title: 'МИНИ-АППКА',
-    price: 'ОТ 100$',
-    page: 1
-  },
-  {
-    id: 7,
     title: 'ВИДЕО МОНТАЖ',
     price: 'ОТ 150$',
     page: 2
   },
   {
-    id: 8,
+    id: 7,
     title: 'АНИМАЦИЯ',
     price: 'ОТ 200$',
     page: 2
   },
   {
-    id: 9,
+    id: 8,
     title: 'СЪЕМКА КОНТЕНТА',
+    price: 'ОТ 300$',
+    page: 2
+  },
+  {
+    id: 9,
+    title: 'ФОТОСЕССИЯ',
+    price: 'ОТ 250$',
+    page: 2
+  },
+  {
+    id: 10,
+    title: 'МИНИ-АППКА',
+    price: 'ОТ 100$',
+    page: 2
+  },
+  {
+    id: 11,
+    title: 'WEB РАЗРАБОТКА',
+    price: 'ОТ 500$',
+    page: 3
+  },
+  {
+    id: 12,
+    title: 'МОБИЛЬНЫЕ ПРИЛОЖЕНИЯ',
+    price: 'ОТ 800$',
+    page: 3
+  },
+  {
+    id: 13,
+    title: 'БРЕНДИНГ',
     price: 'ОТ 300$',
     page: 3
   },
   {
-    id: 10,
-    title: 'ФОТОСЕССИЯ',
-    price: 'ОТ 250$',
+    id: 14,
+    title: 'КОПИРАЙТИНГ',
+    price: 'ОТ 50$',
+    page: 3
+  },
+  {
+    id: 15,
+    title: 'КОНСУЛЬТАЦИИ',
+    price: 'ОТ 100$',
     page: 3
   }
 ];

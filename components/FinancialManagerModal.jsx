@@ -10,8 +10,6 @@ import {
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import Notification from '@/components/ui/Notification';
-import { useNotification } from '@/hooks/useNotification';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -50,7 +48,7 @@ export default function FinancialManagerModal({ visible, onClose }) {
         message={notification.message}
         onHide={hideNotification}
       />
-    <Modal
+      <Modal
       visible={visible}
       transparent={true}
       animationType="fade"
@@ -97,9 +95,8 @@ export default function FinancialManagerModal({ visible, onClose }) {
           </View>
         </View>
       </BlurView>
-    </>
-    </>
     </Modal>
+    </>
   );
 }
 

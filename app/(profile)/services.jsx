@@ -128,9 +128,6 @@ export default function ServicesScreen() {
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.moreButton}>
-        <MoreHorizontal size={20} color="#666666" />
-      </TouchableOpacity>
     </View>
   );
 

@@ -112,6 +112,11 @@ export default function WalletScreen() {
     setBankModalVisible(false);
   };
 
+  const handleBankModalComplete = () => {
+    // Закрываем модалку банка полностью
+    setBankModalVisible(false);
+  };
+
   const handleViewMoreTeam = () => {
     // TODO: Показать всю команду
     console.log('Показать всю команду');
@@ -310,7 +315,7 @@ export default function WalletScreen() {
         {/* Bank Modal */}
         <BankModal
           visible={bankModalVisible}
-          onClose={handleBankModalClose}
+          onClose={handleBankModalComplete}
         />
       </SafeAreaView>
     </ImageBackground>

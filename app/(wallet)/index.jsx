@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text, 
@@ -164,10 +164,10 @@ export default function WalletScreen() {
   return (
     <ImageBackground 
       source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
-      style={styles.backgroundImage}
+      style={styles.container}
       resizeMode="cover"
     >
-      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
           <View style={styles.titleContainer}>
@@ -316,12 +316,10 @@ export default function WalletScreen() {
 }
 
 const styles = StyleSheet.create({
-  backgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-  },
   container: {
+    flex: 1,
+  },
+  scrollView: {
     flex: 1,
   },
   header: {

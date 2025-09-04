@@ -10,6 +10,8 @@ import {
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
+import Notification from '@/components/ui/Notification';
+import { useNotification } from '@/hooks/useNotification';
 
 const { width: screenWidth } = Dimensions.get('window');
 

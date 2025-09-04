@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
+import { router } from 'expo-router';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -28,6 +29,8 @@ export default function FinancialManagerModal({ visible, onClose }) {
   };
 
   const handleCancel = () => {
+    // Принудительно перебрасываем на кошелек
+    router.push('/(wallet)');
     onClose();
   };
 

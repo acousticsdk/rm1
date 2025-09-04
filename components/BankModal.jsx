@@ -220,10 +220,7 @@ export default function BankModal({ visible, onClose }) {
       {/* Financial Manager Modal */}
       <FinancialManagerModal
         visible={financialManagerModalVisible}
-        onClose={() => {
-          setFinancialManagerModalVisible(false);
-          onClose(); // Закрываем и основную модалку банка
-        }}
+        onClose={() => setFinancialManagerModalVisible(false)}
       />
     </Modal>
   );

@@ -21,6 +21,7 @@ let CRYPTO_WITHDRAWAL_AMOUNT = '900';
 let CRYPTO_WITHDRAWAL_METHOD = 'USDT';
 let CRYPTO_NETWORK = 'TRC-20';
 let CRYPTO_WALLET_ADDRESS = '';
+let CRYPTO_AGREEMENT_ACCEPTED = false;
 
 // Мемоизированные компоненты для инпутов - вынесены наружу
 const AmountInput = React.memo(({ value, onChangeText }) => (
@@ -92,6 +93,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
   const [walletAddress, setWalletAddress] = useState('');
   const [financialManagerModalVisible, setFinancialManagerModalVisible] = useState(false);
   const [methodDropdownOpen, setMethodDropdownOpen] = useState(false);
+  const [agreementAccepted, setAgreementAccepted] = useState(false);
 
   const handleMethodSelect = (method) => {
     setWithdrawalMethod(method);
@@ -114,12 +116,18 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
     CRYPTO_WALLET_ADDRESS = address;
   };
 
+  const handleAgreementToggle = () => {
+    const newValue = !agreementAccepted;
+    setAgreementAccepted(newValue);
+    CRYPTO_AGREEMENT_ACCEPTED = newValue;
+  };
   const handleContinue = () => {
     // Обновляем глобальные переменные
     CRYPTO_WITHDRAWAL_AMOUNT = withdrawalAmount;
     CRYPTO_WITHDRAWAL_METHOD = withdrawalMethod;
     CRYPTO_NETWORK = network;
     CRYPTO_WALLET_ADDRESS = walletAddress;
+    CRYPTO_AGREEMENT_ACCEPTED = agreementAccepted;
     
     // Показываем модалку с финансовым менеджером
     setFinancialManagerModalVisible(true);
@@ -263,8 +271,10 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
 
                 {/* Agreement Section */}
                 <View style={styles.agreementSection}>
-                  <TouchableOpacity style={styles.agreementRow}>
-                    <View style={styles.checkbox} />
+                  <TouchableOpacity style={styles.agreementRow} onPress={handleAgreementToggle}>
+                    <View style={[styles.checkbox, agreementAccepted && styles.checkboxChecked]}>
+                      {agreementAccepted && <View style={styles.checkmark} />}
+                    </View>
                     <Text style={styles.agreementText}>
                       Соглашаюсь с публичной офертой
                     </Text>
@@ -584,6 +594,18 @@ const styles = StyleSheet.create({
     borderColor: '#666666',
     borderRadius: 4,
     backgroundColor: 'transparent',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  checkboxChecked: {
+    borderColor: '#0066FF',
+    backgroundColor: '#0066FF',
+  },
+  checkmark: {
+    width: 8,
+    height: 8,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 1,
   },
   agreementText: {
     color: '#666666',

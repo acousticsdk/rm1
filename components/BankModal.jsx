@@ -11,11 +11,6 @@ import {
   Keyboard
 } from 'react-native';
 import { ChevronDown } from 'lucide-react-native';
-import Animated, { 
-  useSharedValue, 
-  useAnimatedStyle, 
-  withTiming
-} from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import FinancialManagerModal from './FinancialManagerModal';
 
@@ -26,15 +21,12 @@ let BANK_WITHDRAWAL_AMOUNT = '900';
 export default function BankModal({ visible, onClose, onSuccess }) {
   const [selectedCurrency, setSelectedCurrency] = useState('EURO');
   const [withdrawalAmount, setWithdrawalAmount] = useState('900');
+  const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
   const [financialManagerModalVisible, setFinancialManagerModalVisible] = useState(false);
-  
-  const dropdownHeight = useSharedValue(0);
-  const dropdownOpacity = useSharedValue(0);
-  const dropdownPadding = useSharedValue(0);
 
   const handleCurrencySelect = (currency) => {
     setSelectedCurrency(currency);
-    closeDropdown();
+    setShowCurrencyDropdown(false);
     BANK_SELECTED_CURRENCY = currency;
   };
 
@@ -61,34 +53,24 @@ export default function BankModal({ visible, onClose, onSuccess }) {
     }, 100);
   };
 
-  const openDropdown = () => {
-    dropdownHeight.value = withTiming(120, { duration: 300 });
-    dropdownOpacity.value = withTiming(1, { duration: 300 });
-    dropdownPadding.value = withTiming(23, { duration: 300 });
-  };
-
-  const closeDropdown = () => {
-    dropdownHeight.value = withTiming(0, { duration: 300 });
-    dropdownOpacity.value = withTiming(0, { duration: 300 });
-    dropdownPadding.value = withTiming(0, { duration: 300 });
-  };
-
-  const toggleDropdown = () => {
-    if (dropdownHeight.value <= 0) {
-      openDropdown();
-    } else {
-      closeDropdown();
-    }
-  };
-
-  const animatedDropdownStyle = useAnimatedStyle(() => {
-    return {
-      height: dropdownHeight.value,
-      opacity: dropdownOpacity.value,
-      paddingTop: dropdownPadding.value,
-      paddingBottom: dropdownPadding.value,
-    };
-  });
+  // Мемоизированный компонент для инпута суммы
+  const AmountInput = React.memo(() => (
+    <LinearGradient
+      colors={['#4A9EFF', '#0066FF']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 0 }}
+      style={styles.amountInputContainer}
+    >
+      <TextInput
+        style={styles.amountInput}
+        value={withdrawalAmount}
+        onChangeText={handleAmountChange}
+        placeholder="900"
+        placeholderTextColor="#FFFFFF80"
+        keyboardType="numeric"
+      />
+    </LinearGradient>
+  ));
 
   return (
     <Modal
@@ -122,87 +104,76 @@ export default function BankModal({ visible, onClose, onSuccess }) {
                   <Text style={styles.currencyLabel}>Валюта</Text>
                   
                   <View style={styles.currencySectionContainer}>
-                    <TouchableOpacity style={styles.currencyDropdown} onPress={toggleDropdown}>
+                    <TouchableOpacity 
+                      style={styles.currencyDropdown} 
+                      onPress={() => setShowCurrencyDropdown(!showCurrencyDropdown)}
+                    >
                       <Text style={styles.currencyDropdownText}>
                         {selectedCurrency}
                       </Text>
                       <ChevronDown size={20} color="#666666" />
                     </TouchableOpacity>
                     
-                    {/* Кнопки выбора валюты */}
-                    <Animated.View style={[styles.currencyButtonsContainer, animatedDropdownStyle]}>
-                      <View style={styles.currencyButtonsRowSingle}>
-                        <TouchableOpacity 
-                          style={[
-                            styles.currencyButton,
-                            styles.currencyButtonThird,
-                            selectedCurrency === 'EURO' && styles.currencyButtonSelected
-                          ]}
-                          onPress={() => handleCurrencySelect('EURO')}
-                        >
-                          <Text style={[
-                            styles.currencyButtonText,
-                            selectedCurrency === 'EURO' && styles.currencyButtonTextSelected
-                          ]}>
-                            EURO
-                          </Text>
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity 
-                          style={[
-                            styles.currencyButton,
-                            styles.currencyButtonThird,
-                            selectedCurrency === 'PLN' && styles.currencyButtonSelected
-                          ]}
-                          onPress={() => handleCurrencySelect('PLN')}
-                        >
-                          <Text style={[
-                            styles.currencyButtonText,
-                            selectedCurrency === 'PLN' && styles.currencyButtonTextSelected
-                          ]}>
-                            PLN
-                          </Text>
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity 
-                          style={[
-                            styles.currencyButton,
-                            styles.currencyButtonThird,
-                            selectedCurrency === 'USD' && styles.currencyButtonSelected
-                          ]}
-                          onPress={() => handleCurrencySelect('USD')}
-                        >
-                          <Text style={[
-                            styles.currencyButtonText,
-                            selectedCurrency === 'USD' && styles.currencyButtonTextSelected
-                          ]}>
-                            USD
-                          </Text>
-                        </TouchableOpacity>
+                    {showCurrencyDropdown && (
+                      <View style={styles.currencyButtonsContainer}>
+                        <View style={styles.currencyButtonsRowSingle}>
+                          <TouchableOpacity 
+                            style={[
+                              styles.currencyButton,
+                              styles.currencyButtonThird,
+                              selectedCurrency === 'EURO' && styles.currencyButtonSelected
+                            ]}
+                            onPress={() => handleCurrencySelect('EURO')}
+                          >
+                            <Text style={[
+                              styles.currencyButtonText,
+                              selectedCurrency === 'EURO' && styles.currencyButtonTextSelected
+                            ]}>
+                              EURO
+                            </Text>
+                          </TouchableOpacity>
+                          
+                          <TouchableOpacity 
+                            style={[
+                              styles.currencyButton,
+                              styles.currencyButtonThird,
+                              selectedCurrency === 'PLN' && styles.currencyButtonSelected
+                            ]}
+                            onPress={() => handleCurrencySelect('PLN')}
+                          >
+                            <Text style={[
+                              styles.currencyButtonText,
+                              selectedCurrency === 'PLN' && styles.currencyButtonTextSelected
+                            ]}>
+                              PLN
+                            </Text>
+                          </TouchableOpacity>
+                          
+                          <TouchableOpacity 
+                            style={[
+                              styles.currencyButton,
+                              styles.currencyButtonThird,
+                              selectedCurrency === 'USD' && styles.currencyButtonSelected
+                            ]}
+                            onPress={() => handleCurrencySelect('USD')}
+                          >
+                            <Text style={[
+                              styles.currencyButtonText,
+                              selectedCurrency === 'USD' && styles.currencyButtonTextSelected
+                            ]}>
+                              USD
+                            </Text>
+                          </TouchableOpacity>
+                        </View>
                       </View>
-                    </Animated.View>
+                    )}
                   </View>
                 </View>
 
                 {/* Amount Section */}
                 <View style={styles.amountSection}>
                   <Text style={styles.amountLabel}>Сумма</Text>
-                  <LinearGradient
-                    colors={['#4A9EFF', '#0066FF']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.amountInputContainer}
-                  >
-                    <TextInput
-                     key="bank-amount-input"
-                      style={styles.amountInput}
-                      value={withdrawalAmount}
-                      onChangeText={handleAmountChange}
-                      placeholder="900"
-                      placeholderTextColor="#FFFFFF80"
-                      keyboardType="numeric"
-                    />
-                  </LinearGradient>
+                  <AmountInput />
                 </View>
               </View>
             </View>
@@ -303,10 +274,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     backgroundColor: '#131313',
     paddingHorizontal: 25,
-    overflow: 'hidden',
     marginTop: -10,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 23,
+    paddingBottom: 23,
   },
   currencyButtonsRowSingle: {
     flexDirection: 'row',

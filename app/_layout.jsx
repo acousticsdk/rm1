@@ -57,7 +57,7 @@ export default function RootLayout() {
   return (
     <View style={styles.container}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
+        <Stack.Screen name="index" redirect href="/(start)/screen1" />
         <Stack.Screen name="(start)" options={{ contentStyle: { backgroundColor: '#070707' } }} />
         <Stack.Screen name="(auth)" options={{ contentStyle: { backgroundColor: '#070707' } }} />
         <Stack.Screen name="(profile)" options={{ contentStyle: { backgroundColor: '#070707' } }} />

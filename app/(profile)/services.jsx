@@ -8,7 +8,7 @@ import {
   ImageBackground
 } from 'react-native';
 import { router } from 'expo-router';
-import { MoveHorizontal as MoreHorizontal, Minus } from 'lucide-react-native';
+import { Minus, ChevronLeft } from 'lucide-react-native';
 import Button from '@/components/ui/Button';
 
 // Глобальные переменные для интеграции с бекендом
@@ -133,6 +133,9 @@ export default function ServicesScreen() {
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           {/* Services Title */}
           <View style={styles.servicesTitleContainer}>
+            <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+              <ChevronLeft size={24} color="#FFFFFF" />
+            </TouchableOpacity>
             <Text style={styles.servicesTitle}>УСЛУГИ</Text>
           </View>
 
@@ -173,15 +176,6 @@ export default function ServicesScreen() {
             variant="primary"
           />
         </View>
-        
-        {/* Close Button - Fixed at bottom */}
-        <View style={styles.closeButtonContainer}>
-          <Button 
-            title="ЗАКРЫТЬ" 
-            onPress={handleBack}
-            variant="primary"
-          />
-        </View>
       </View>
     </ImageBackground>
   );
@@ -203,9 +197,19 @@ const styles = StyleSheet.create({
   },
   servicesTitleContainer: {
     alignItems: 'center',
+    position: 'relative',
     marginTop: 70,
     marginBottom: 40,
     paddingHorizontal: 24,
+  },
+  backButton: {
+    position: 'absolute',
+    left: 24,
+    top: 15,
+    width: 40,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   servicesTitle: {
     color: '#FFFFFF',
@@ -241,7 +245,7 @@ const styles = StyleSheet.create({
   },
   serviceTitle: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 13,
     fontFamily: 'Codec-Pro-Bold',
     flex: 1,
   },
@@ -300,10 +304,6 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
   addServiceButtonContainer: {
-    paddingHorizontal: 24,
-    paddingBottom: 10,
-  },
-  closeButtonContainer: {
     paddingHorizontal: 24,
     paddingBottom: 40,
   },

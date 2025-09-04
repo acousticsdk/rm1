@@ -194,6 +194,7 @@ export default function BankModal({ visible, onClose, onSuccess }) {
                     style={styles.amountInputContainer}
                   >
                     <TextInput
+                     key="bank-amount-input"
                       style={styles.amountInput}
                       value={withdrawalAmount}
                       onChangeText={handleAmountChange}

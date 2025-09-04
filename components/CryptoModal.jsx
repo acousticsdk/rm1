@@ -177,6 +177,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                     style={styles.amountInputContainer}
                   >
                     <TextInput
+                     key="crypto-amount-input"
                       style={styles.amountInput}
                       value={withdrawalAmount}
                       onChangeText={handleAmountChange}
@@ -294,6 +295,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                   <Text style={styles.walletLabel}>Кошелёк</Text>
                   <View style={styles.walletInputRow}>
                     <TextInput
+                     key="crypto-wallet-input"
                       style={styles.walletInput}
                       value={walletAddress}
                       onChangeText={handleWalletAddressChange}

@@ -113,8 +113,12 @@ export default function WalletScreen() {
   };
 
   const handleBankModalComplete = () => {
-    // Закрываем модалку банка полностью
+    // Полностью сбрасываем состояние модалки
     setBankModalVisible(false);
+    // Принудительно обновляем состояние для мобильных
+    setTimeout(() => {
+      setBankModalVisible(false);
+    }, 50);
   };
 
   const handleViewMoreTeam = () => {

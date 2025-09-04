@@ -55,8 +55,10 @@ export default function BankModal({ visible, onClose }) {
   const handleFinancialManagerComplete = () => {
     // Закрываем модалку финансового менеджера
     setFinancialManagerModalVisible(false);
-    // Закрываем банковскую модалку полностью
-    onClose();
+    // Небольшая задержка для корректного закрытия на мобильных
+    setTimeout(() => {
+      onClose();
+    }, 100);
   };
 
   const openDropdown = () => {

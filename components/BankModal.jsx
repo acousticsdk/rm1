@@ -52,6 +52,13 @@ export default function BankModal({ visible, onClose }) {
     setFinancialManagerModalVisible(true);
   };
 
+  const handleFinancialManagerComplete = () => {
+    // Закрываем модалку финансового менеджера
+    setFinancialManagerModalVisible(false);
+    // Закрываем банковскую модалку полностью
+    onClose();
+  };
+
   const openDropdown = () => {
     dropdownHeight.value = withTiming(120, { duration: 300 });
     dropdownOpacity.value = withTiming(1, { duration: 300 });
@@ -220,7 +227,7 @@ export default function BankModal({ visible, onClose }) {
       {/* Financial Manager Modal */}
       <FinancialManagerModal
         visible={financialManagerModalVisible}
-        onClose={() => setFinancialManagerModalVisible(false)}
+        onClose={handleFinancialManagerComplete}
       />
     </Modal>
   );

@@ -128,6 +128,8 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
         source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
         style={styles.backgroundImage}
         resizeMode="cover"
+      >
+        <TouchableWithoutFeedback
           onPress={(e) => {
             // Не закрывать клавиатуру, если тап по самому инпуту
             if (Platform.OS === 'web') {
@@ -139,7 +141,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
             }
           }}
           accessible={false}
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        >
           <View style={styles.container}>
             {/* Header */}
             <View style={styles.header}>

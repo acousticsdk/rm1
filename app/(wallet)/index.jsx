@@ -507,7 +507,6 @@ const styles = StyleSheet.create({
   },
   transactionAvatarContainer: {
     position: 'relative',
-    marginRight: 16,
   },
   transactionAvatar: {
     width: 50,

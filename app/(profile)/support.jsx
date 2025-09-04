@@ -10,12 +10,15 @@ import {
 import { router } from 'expo-router';
 import { ChevronRight } from 'lucide-react-native';
 import Button from '@/components/ui/Button';
+import FAQModal from '@/components/FAQModal';
 
 // Глобальные переменные для интеграции с бекендом
 let SUPPORT_FAQ_OPENED = false;
 let SUPPORT_CONTACT_REQUESTED = false;
 
 export default function SupportScreen() {
+  const [faqModalVisible, setFaqModalVisible] = useState(false);
+
   const handleBack = () => {
     router.back();
   };
@@ -24,10 +27,8 @@ export default function SupportScreen() {
     // Обновляем глобальную переменную
     SUPPORT_FAQ_OPENED = true;
     
-    // TODO: Здесь будет логика открытия FAQ
-    // Данные доступны в переменной: SUPPORT_FAQ_OPENED
-    
-    console.log('Открыть FAQ');
+    // Открываем модалку FAQ
+    setFaqModalVisible(true);
   };
 
   const handleContactSupport = () => {
@@ -91,6 +92,12 @@ export default function SupportScreen() {
             variant="primary"
           />
         </View>
+        
+        {/* FAQ Modal */}
+        <FAQModal
+          visible={faqModalVisible}
+          onClose={() => setFaqModalVisible(false)}
+        />
       </View>
     </ImageBackground>
   );

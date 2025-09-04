@@ -177,15 +177,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Codec-Pro-Bold',
   },
-  spacer: {
-    flex: 1,
-    minHeight: 200,
-  },
   closeButtonContainer: {
     paddingHorizontal: 24,
-    paddingBottom: 20,
+    paddingBottom: 40,
+    backgroundColor: 'transparent',
   },
   bottomSpacing: {
-    height: 20,
+    height: 200,
   },
 });

@@ -16,6 +16,7 @@ import Svg, { Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop }
 import { BankIcon, CryptoIcon } from '../../components/ui/Icons';
 import BankModal from '../../components/BankModal';
 import CryptoModal from '../../components/CryptoModal';
+import SpecialistOperationsModal from '../../components/SpecialistOperationsModal';
 import Notification from '../../components/ui/Notification';
 import { useNotification } from '../../hooks/useNotification';
 
@@ -102,6 +103,8 @@ export default function WalletScreen() {
   const [teamStartIndex, setTeamStartIndex] = useState(0);
   const [bankModalVisible, setBankModalVisible] = useState(false);
   const [cryptoModalVisible, setCryptoModalVisible] = useState(false);
+  const [specialistModalVisible, setSpecialistModalVisible] = useState(false);
+  const [selectedSpecialist, setSelectedSpecialist] = useState('');
   const { notification, showSuccess, hideNotification } = useNotification();
 
   const handleBankWithdraw = () => {
@@ -147,6 +150,11 @@ export default function WalletScreen() {
     console.log('Показать всю команду');
   };
 
+  const handleSpecialistPress = (specialistName) => {
+    setSelectedSpecialist(specialistName);
+    setSpecialistModalVisible(true);
+  };
+
   const handleTeamPrevious = () => {
     if (teamStartIndex > 0) {
       const newIndex = teamStartIndex - 1;
@@ -169,10 +177,13 @@ export default function WalletScreen() {
 
   const renderTeamMember = ({ item, index }) => (
     <View key={item.id} style={styles.teamMemberWrapper}>
-      <View style={styles.teamMember}>
+      <TouchableOpacity 
+        style={styles.teamMember}
+        onPress={() => handleSpecialistPress(item.name)}
+      >
         <Image source={{ uri: item.avatar }} style={styles.teamAvatar} />
         <Text style={styles.teamName}>{item.name}</Text>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 
@@ -356,6 +367,13 @@ export default function WalletScreen() {
           visible={cryptoModalVisible}
           onClose={handleCryptoModalComplete}
           onSuccess={handleNotificationSuccess}
+        />
+
+        {/* Specialist Operations Modal */}
+        <SpecialistOperationsModal
+          visible={specialistModalVisible}
+          onClose={() => setSpecialistModalVisible(false)}
+          specialistName={selectedSpecialist}
         />
       </SafeAreaView>
     </ImageBackground>

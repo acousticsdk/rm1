@@ -8,6 +8,7 @@ import {
   Image,
   Dimensions,
   ImageBackground
+  ImageBackground
 } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -152,13 +153,18 @@ export default function WalletScreen() {
           <Image source={{ uri: item.avatar }} style={styles.transactionAvatar} />
           <View style={styles.transactionIndicator} />
         </View>
-        <View style={styles.transactionInfo}>
-          <Text style={styles.transactionName}>
-            {item.name} ({item.specialization})
-          </Text>
-          <Text style={styles.transactionTime}>{item.time}</Text>
+    <ImageBackground 
+      source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
+      <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>КОШЕЛЕК</Text>
+          </View>
         </View>
-      </View>
       <Text style={styles.transactionAmount}>{item.amount}$</Text>
     </View>
   );
@@ -309,6 +315,7 @@ export default function WalletScreen() {
       </ScrollView>
 
       {/* Bank Modal */}
+      {/* Bank Modal */}
       <BankModal
         visible={bankModalVisible}
         onClose={handleBankModalClose}
@@ -318,6 +325,11 @@ export default function WalletScreen() {
 }
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
   backgroundImage: {
     flex: 1,
     width: '100%',

@@ -253,7 +253,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                       onChangeText={handleWalletAddressChange}
                     />
                     <TouchableOpacity style={styles.checkWalletButton}>
-                      <Text style={styles.checkWalletText}>ПРОВЕРИТЬ КОШЕЛЕК</Text>
+                      <Text style={styles.checkWalletText}>ПРОВЕРИТЬ</Text>
                     </TouchableOpacity>
                   </View>
                   <Text style={styles.walletNote}>

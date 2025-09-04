@@ -50,64 +50,54 @@ export default function FinancialManagerModal({ visible, onClose }) {
         message={notification.message}
         onHide={hideNotification}
       />
-    <>
-      <Notification
-        visible={notification.visible}
-        type={notification.type}
-        title={notification.title}
-        message={notification.message}
-        onHide={hideNotification}
-      />
       <Modal
-      visible={visible}
-      transparent={true}
-      animationType="fade"
-      onRequestClose={onClose}
-    >
-      <BlurView intensity={20} style={styles.blurOverlay}>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            {/* Title */}
-            <Text style={styles.modalTitle}>
-              С ВАМИ СВЯЖЕТСЯ ФИН. МЕНЕДЖЕР
-            </Text>
-            
-            {/* Description */}
-            <Text style={styles.modalDescription}>
-              В течение 12 часов с вами свяжется наш финансовый менеджер и 
-              отправит реквизиты и Invoice для оплаты. Пожалуйста, оставайтесь на 
-              связи до завершения оформления. Если готовы — нажмите кнопку 
-              ниже, чтобы создать заявку.
-            </Text>
-            
-            {/* Create Request Button */}
-            <TouchableOpacity 
-              style={styles.createRequestButton}
-              onPress={handleCreateRequest}
-            >
-              <LinearGradient
-                colors={['#0066FF', '#0088FF']}
-                style={styles.createRequestGradient}
-                start={{ x: 0, y: 0 }}
-                end={{ x: 1, y: 0 }}
+        visible={visible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={onClose}
+      >
+        <BlurView intensity={20} style={styles.blurOverlay}>
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              {/* Title */}
+              <Text style={styles.modalTitle}>
+                С ВАМИ СВЯЖЕТСЯ ФИН. МЕНЕДЖЕР
+              </Text>
+              
+              {/* Description */}
+              <Text style={styles.modalDescription}>
+                В течение 12 часов с вами свяжется наш финансовый менеджер и 
+                отправит реквизиты и Invoice для оплаты. Пожалуйста, оставайтесь на 
+                связи до завершения оформления. Если готовы — нажмите кнопку 
+                ниже, чтобы создать заявку.
+              </Text>
+              
+              {/* Create Request Button */}
+              <TouchableOpacity 
+                style={styles.createRequestButton}
+                onPress={handleCreateRequest}
               >
-                <Text style={styles.createRequestText}>СОЗДАТЬ ЗАЯВКУ</Text>
-              </LinearGradient>
-            </TouchableOpacity>
-            
-            {/* Cancel Button */}
-            <TouchableOpacity 
-              style={styles.cancelButton}
-              onPress={handleCancel}
-            >
-              <Text style={styles.cancelText}>ОТМЕНИТЬ</Text>
-            </TouchableOpacity>
+                <LinearGradient
+                  colors={['#0066FF', '#0088FF']}
+                  style={styles.createRequestGradient}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                >
+                  <Text style={styles.createRequestText}>СОЗДАТЬ ЗАЯВКУ</Text>
+                </LinearGradient>
+              </TouchableOpacity>
+              
+              {/* Cancel Button */}
+              <TouchableOpacity 
+                style={styles.cancelButton}
+                onPress={handleCancel}
+              >
+                <Text style={styles.cancelText}>ОТМЕНИТЬ</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
-      </BlurView>
-    </>
-    </Modal>
-    </>
+        </BlurView>
+      </Modal>
     </>
   );
 }

@@ -57,7 +57,7 @@ export default function BankModal({ visible, onClose }) {
   };
 
   const openDropdown = () => {
-    dropdownHeight.value = withTiming('auto', { duration: 300 });
+    dropdownHeight.value = withTiming(120, { duration: 300 });
     dropdownOpacity.value = withTiming(1, { duration: 300 });
     dropdownPadding.value = withTiming(23, { duration: 300 });
   };
@@ -69,7 +69,7 @@ export default function BankModal({ visible, onClose }) {
   };
 
   const toggleDropdown = () => {
-    if (dropdownHeight.value === 0) {
+    if (dropdownHeight.value <= 0) {
       openDropdown();
     } else {
       closeDropdown();

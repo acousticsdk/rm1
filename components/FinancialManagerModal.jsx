@@ -171,3 +171,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Codec-Pro-Bold',
   },
 });
+
+export default FinancialManagerModal

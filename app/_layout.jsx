@@ -63,7 +63,7 @@ export default function RootLayout() {
         <Stack.Screen name="(profile)" options={{ contentStyle: { backgroundColor: '#070707' } }} />
         <Stack.Screen name="(chat)" options={{ contentStyle: { backgroundColor: '#070707' } }} />
         <Stack.Screen name="(marketplace)" options={{ contentStyle: { backgroundColor: '#070707' } }} />
-        <Stack.Screen name="(wallet)" options={{ contentStyle: { backgroundColor: 'transparent' } }} />
+        <Stack.Screen name="(wallet)" options={{ contentStyle: { backgroundColor: '#070707' } }} />
       </Stack>
       <StatusBar style="light" />
     </View>

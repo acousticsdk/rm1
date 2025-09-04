@@ -10,11 +10,11 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
-    'Benzin-Bold': require('../assets/fonts/Benzin-Bold.ttf'),
-    'Codec-Pro-Light': require('../assets/fonts/CodecPro-Light.ttf'),
-    'Codec-Pro-News': require('../assets/fonts/CodecPro-News.ttf'),
-    'Codec-Pro-Bold': require('../assets/fonts/CodecPro-Bold.ttf'),
-    'Codec-Pro-Heavy': require('../assets/fonts/CodecPro-Heavy.ttf'),
+    'Benzin-Bold': require('../../assets/fonts/Benzin-Bold.ttf'),
+    'Codec-Pro-Light': require('../../assets/fonts/CodecPro-Light.ttf'),
+    'Codec-Pro-News': require('../../assets/fonts/CodecPro-News.ttf'),
+    'Codec-Pro-Bold': require('../../assets/fonts/CodecPro-Bold.ttf'),
+    'Codec-Pro-Heavy': require('../../assets/fonts/CodecPro-Heavy.ttf'),
   });
 
   useEffect(() => {

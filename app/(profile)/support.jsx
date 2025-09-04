@@ -48,13 +48,6 @@ export default function SupportScreen() {
     >
       <View style={styles.container}>
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-          {/* Header */}
-          <View style={styles.titleWrapper}>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>ПРОФИЛЬ</Text>
-            </View>
-          </View>
-
           {/* Support Title */}
           <View style={styles.supportTitleContainer}>
             <Text style={styles.supportTitle}>ТЕХ-ПОДДЕРЖКА</Text>
@@ -117,28 +110,10 @@ const styles = StyleSheet.create({
   scrollView: {
     flex: 1,
   },
-  titleWrapper: {
-    alignItems: 'center',
-    marginTop: 70,
-    marginBottom: 40,
-  },
-  titleContainer: {
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
-    borderRadius: 50,
-    paddingHorizontal: 40,
-    paddingVertical: 12,
-    backgroundColor: '#000000',
-  },
-  title: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontFamily: 'Benzin-Bold',
-    letterSpacing: 2,
-  },
   supportTitleContainer: {
     alignItems: 'center',
-    marginBottom: 60,
+    marginTop: 70,
+    marginBottom: 80,
     paddingHorizontal: 24,
   },
   supportTitle: {

@@ -108,6 +108,7 @@ export default function FinancialManagerModal({ visible, onClose }) {
     </>
     </Modal>
     </>
+    </>
   );
 }
 

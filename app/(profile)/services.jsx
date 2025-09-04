@@ -8,7 +8,7 @@ import {
   ImageBackground
 } from 'react-native';
 import { router } from 'expo-router';
-import { MoreHorizontal, Minus } from 'lucide-react-native';
+import { MoveHorizontal as MoreHorizontal, Minus } from 'lucide-react-native';
 import Button from '@/components/ui/Button';
 
 // Глобальные переменные для интеграции с бекендом

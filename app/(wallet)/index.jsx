@@ -11,7 +11,7 @@ import {
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
-import { BankIcon, CryptoIcon } from '../components/ui/Icons';
+import { BankIcon, CryptoIcon } from '../../components/ui/Icons';
 
 const { width: screenWidth } = Dimensions.get('window');
 

@@ -10,16 +10,13 @@ import {
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import Notification from '@/components/ui/Notification';
-import { useNotification } from '@/hooks/useNotification';
 
 const { width: screenWidth } = Dimensions.get('window');
 
 // Глобальные переменные для интеграции с бекендом
 let FINANCIAL_MANAGER_REQUEST_SENT = false;
 
-export default function FinancialManagerModal({ visible, onClose }) {
-  const { notification, showSuccess, hideNotification } = useNotification();
+export default function FinancialManagerModal({ visible, onClose, onSuccess }) {
 
   const handleCreateRequest = () => {
     // Обновляем глобальную переменную
@@ -29,7 +26,9 @@ export default function FinancialManagerModal({ visible, onClose }) {
     // Данные доступны в переменной: FINANCIAL_MANAGER_REQUEST_SENT
     
     // Показываем успешный нотификейшн
-    showSuccess('Заявка создана!', 'Финансовый менеджер свяжется с вами в течение 12 часов');
+    if (onSuccess) {
+      onSuccess('Заявка создана!', 'Финансовый менеджер свяжется с вами в течение 12 часов');
+    }
     
     console.log('Заявка на связь с финансовым менеджером отправлена');
     // Закрываем все модалки полностью
@@ -42,15 +41,7 @@ export default function FinancialManagerModal({ visible, onClose }) {
   };
 
   return (
-    <>
-      <Notification
-        visible={notification.visible}
-        type={notification.type}
-        title={notification.title}
-        message={notification.message}
-        onHide={hideNotification}
-      />
-      <Modal
+    <Modal
         visible={visible}
         transparent={true}
         animationType="fade"
@@ -98,7 +89,6 @@ export default function FinancialManagerModal({ visible, onClose }) {
           </View>
         </BlurView>
       </Modal>
-    </>
   );
 }
 

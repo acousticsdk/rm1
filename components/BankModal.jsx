@@ -23,7 +23,7 @@ import FinancialManagerModal from './FinancialManagerModal';
 let BANK_SELECTED_CURRENCY = 'EURO';
 let BANK_WITHDRAWAL_AMOUNT = '900';
 
-export default function BankModal({ visible, onClose }) {
+export default function BankModal({ visible, onClose, onSuccess }) {
   const [selectedCurrency, setSelectedCurrency] = useState('EURO');
   const [withdrawalAmount, setWithdrawalAmount] = useState('900');
   const [financialManagerModalVisible, setFinancialManagerModalVisible] = useState(false);
@@ -230,6 +230,7 @@ export default function BankModal({ visible, onClose }) {
       <FinancialManagerModal
         visible={financialManagerModalVisible}
         onClose={handleFinancialManagerComplete}
+        onSuccess={onSuccess}
       />
     </Modal>
   );

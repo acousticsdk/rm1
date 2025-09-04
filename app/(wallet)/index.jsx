@@ -15,6 +15,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import { BankIcon, CryptoIcon } from '../../components/ui/Icons';
 import BankModal from '../../components/BankModal';
+import Notification from '../../components/ui/Notification';
+import { useNotification } from '../../hooks/useNotification';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -98,6 +100,7 @@ export default function WalletScreen() {
   const [transactions] = useState(MOCK_TRANSACTIONS);
   const [teamStartIndex, setTeamStartIndex] = useState(0);
   const [bankModalVisible, setBankModalVisible] = useState(false);
+  const { notification, showSuccess, hideNotification } = useNotification();
 
   const handleBankWithdraw = () => {
     setBankModalVisible(true);
@@ -119,6 +122,10 @@ export default function WalletScreen() {
     setTimeout(() => {
       setBankModalVisible(false);
     }, 50);
+  };
+
+  const handleNotificationSuccess = (title, message) => {
+    showSuccess(title, message);
   };
 
   const handleViewMoreTeam = () => {
@@ -177,6 +184,13 @@ export default function WalletScreen() {
       style={styles.backgroundImage}
       resizeMode="cover"
     >
+      <Notification
+        visible={notification.visible}
+        type={notification.type}
+        title={notification.title}
+        message={notification.message}
+        onHide={hideNotification}
+      />
       <SafeAreaView style={styles.container}>
         <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
           {/* Header */}
@@ -320,6 +334,7 @@ export default function WalletScreen() {
         <BankModal
           visible={bankModalVisible}
           onClose={handleBankModalComplete}
+          onSuccess={handleNotificationSuccess}
         />
       </SafeAreaView>
     </ImageBackground>

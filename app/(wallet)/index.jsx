@@ -456,6 +456,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginHorizontal: 8,
     flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   teamMemberWrapper: {
     width: 80,

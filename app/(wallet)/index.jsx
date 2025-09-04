@@ -162,12 +162,11 @@ export default function WalletScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <ImageBackground 
-        source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
-        style={styles.backgroundImage}
-        resizeMode="cover"
-      >
+    <ImageBackground 
+      source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
+      style={styles.backgroundImage}
+      resizeMode="cover"
+    >
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
@@ -312,8 +311,7 @@ export default function WalletScreen() {
         visible={bankModalVisible}
         onClose={handleBankModalClose}
       />
-      </ImageBackground>
-    </View>
+    </ImageBackground>
   );
 }
 

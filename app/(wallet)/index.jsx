@@ -15,6 +15,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import { BankIcon, CryptoIcon } from '../../components/ui/Icons';
 import BankModal from '../../components/BankModal';
+import CryptoModal from '../../components/CryptoModal';
 import Notification from '../../components/ui/Notification';
 import { useNotification } from '../../hooks/useNotification';
 
@@ -100,6 +101,7 @@ export default function WalletScreen() {
   const [transactions] = useState(MOCK_TRANSACTIONS);
   const [teamStartIndex, setTeamStartIndex] = useState(0);
   const [bankModalVisible, setBankModalVisible] = useState(false);
+  const [cryptoModalVisible, setCryptoModalVisible] = useState(false);
   const { notification, showSuccess, hideNotification } = useNotification();
 
   const handleBankWithdraw = () => {
@@ -107,8 +109,7 @@ export default function WalletScreen() {
   };
 
   const handleCryptoWithdraw = () => {
-    // TODO: Логика пополнения через крипту
-    console.log('Пополнение через крипту');
+    setCryptoModalVisible(true);
   };
 
   const handleBankModalClose = () => {
@@ -121,6 +122,19 @@ export default function WalletScreen() {
     // Принудительно обновляем состояние для мобильных
     setTimeout(() => {
       setBankModalVisible(false);
+    }, 50);
+  };
+
+  const handleCryptoModalClose = () => {
+    setCryptoModalVisible(false);
+  };
+
+  const handleCryptoModalComplete = () => {
+    // Полностью сбрасываем состояние модалки
+    setCryptoModalVisible(false);
+    // Принудительно обновляем состояние для мобильных
+    setTimeout(() => {
+      setCryptoModalVisible(false);
     }, 50);
   };
 
@@ -334,6 +348,13 @@ export default function WalletScreen() {
         <BankModal
           visible={bankModalVisible}
           onClose={handleBankModalComplete}
+          onSuccess={handleNotificationSuccess}
+        />
+
+        {/* Crypto Modal */}
+        <CryptoModal
+          visible={cryptoModalVisible}
+          onClose={handleCryptoModalComplete}
           onSuccess={handleNotificationSuccess}
         />
       </SafeAreaView>

@@ -307,6 +307,10 @@ export default function WalletScreen() {
 
         <View style={styles.bottomSpacing} />
       </ScrollView>
+
+      {/* Bank Modal */}
+      <BankModal
+        visible={bankModalVisible}
         onClose={handleBankModalClose}
       />
     </ImageBackground>

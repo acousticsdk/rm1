@@ -11,11 +11,6 @@ import {
   Keyboard
 } from 'react-native';
 import { ChevronDown } from 'lucide-react-native';
-import Animated, { 
-  useSharedValue, 
-  useAnimatedStyle, 
-  withTiming
-} from 'react-native-reanimated';
 import { LinearGradient } from 'expo-linear-gradient';
 import FinancialManagerModal from './FinancialManagerModal';
 
@@ -31,24 +26,18 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
   const [network, setNetwork] = useState('TRC-20');
   const [walletAddress, setWalletAddress] = useState('');
   const [financialManagerModalVisible, setFinancialManagerModalVisible] = useState(false);
-  
-  const methodDropdownHeight = useSharedValue(0);
-  const methodDropdownOpacity = useSharedValue(0);
-  const methodDropdownPadding = useSharedValue(0);
-  
-  const networkDropdownHeight = useSharedValue(0);
-  const networkDropdownOpacity = useSharedValue(0);
-  const networkDropdownPadding = useSharedValue(0);
+  const [methodDropdownOpen, setMethodDropdownOpen] = useState(false);
+  const [networkDropdownOpen, setNetworkDropdownOpen] = useState(false);
 
   const handleMethodSelect = (method) => {
     setWithdrawalMethod(method);
-    closeMethodDropdown();
+    setMethodDropdownOpen(false);
     CRYPTO_WITHDRAWAL_METHOD = method;
   };
 
   const handleNetworkSelect = (selectedNetwork) => {
     setNetwork(selectedNetwork);
-    closeNetworkDropdown();
+    setNetworkDropdownOpen(false);
     CRYPTO_NETWORK = selectedNetwork;
   };
 
@@ -81,64 +70,6 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
       onClose();
     }, 100);
   };
-
-  const openMethodDropdown = () => {
-    methodDropdownHeight.value = withTiming(80, { duration: 300 });
-    methodDropdownOpacity.value = withTiming(1, { duration: 300 });
-    methodDropdownPadding.value = withTiming(23, { duration: 300 });
-  };
-
-  const closeMethodDropdown = () => {
-    methodDropdownHeight.value = withTiming(0, { duration: 300 });
-    methodDropdownOpacity.value = withTiming(0, { duration: 300 });
-    methodDropdownPadding.value = withTiming(0, { duration: 300 });
-  };
-
-  const toggleMethodDropdown = () => {
-    if (methodDropdownHeight.value <= 0) {
-      openMethodDropdown();
-    } else {
-      closeMethodDropdown();
-    }
-  };
-
-  const openNetworkDropdown = () => {
-    networkDropdownHeight.value = withTiming(80, { duration: 300 });
-    networkDropdownOpacity.value = withTiming(1, { duration: 300 });
-    networkDropdownPadding.value = withTiming(23, { duration: 300 });
-  };
-
-  const closeNetworkDropdown = () => {
-    networkDropdownHeight.value = withTiming(0, { duration: 300 });
-    networkDropdownOpacity.value = withTiming(0, { duration: 300 });
-    networkDropdownPadding.value = withTiming(0, { duration: 300 });
-  };
-
-  const toggleNetworkDropdown = () => {
-    if (networkDropdownHeight.value <= 0) {
-      openNetworkDropdown();
-    } else {
-      closeNetworkDropdown();
-    }
-  };
-
-  const animatedMethodDropdownStyle = useAnimatedStyle(() => {
-    return {
-      height: methodDropdownHeight.value,
-      opacity: methodDropdownOpacity.value,
-      paddingTop: methodDropdownPadding.value,
-      paddingBottom: methodDropdownPadding.value,
-    };
-  });
-
-  const animatedNetworkDropdownStyle = useAnimatedStyle(() => {
-    return {
-      height: networkDropdownHeight.value,
-      opacity: networkDropdownOpacity.value,
-      paddingTop: networkDropdownPadding.value,
-      paddingBottom: networkDropdownPadding.value,
-    };
-  });
 
   return (
     <Modal
@@ -193,7 +124,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                   <Text style={styles.methodLabel}>Способ вывода</Text>
                   
                   <View style={styles.methodSectionContainer}>
-                    <TouchableOpacity style={styles.methodDropdown} onPress={toggleMethodDropdown}>
+                    <TouchableOpacity style={styles.methodDropdown} onPress={() => setMethodDropdownOpen(!methodDropdownOpen)}>
                       <Text style={styles.methodDropdownText}>
                         {withdrawalMethod}
                       </Text>
@@ -201,7 +132,8 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                     </TouchableOpacity>
                     
                     {/* Кнопки выбора способа вывода */}
-                    <Animated.View style={[styles.methodButtonsContainer, animatedMethodDropdownStyle]}>
+                    {methodDropdownOpen && (
+                    <View style={styles.methodButtonsContainer}>
                       <View style={styles.methodButtonsRow}>
                         <TouchableOpacity 
                           style={[
@@ -235,7 +167,8 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                           </Text>
                         </TouchableOpacity>
                       </View>
-                    </Animated.View>
+                    </View>
+                    )}
                   </View>
                 </View>
 
@@ -244,7 +177,7 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                   <Text style={styles.networkLabel}>Сеть</Text>
                   
                   <View style={styles.networkSectionContainer}>
-                    <TouchableOpacity style={styles.networkDropdown} onPress={toggleNetworkDropdown}>
+                    <TouchableOpacity style={styles.networkDropdown} onPress={() => setNetworkDropdownOpen(!networkDropdownOpen)}>
                       <Text style={styles.networkDropdownText}>
                         {network}
                       </Text>
@@ -252,7 +185,8 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                     </TouchableOpacity>
                     
                     {/* Кнопки выбора сети */}
-                    <Animated.View style={[styles.networkButtonsContainer, animatedNetworkDropdownStyle]}>
+                    {networkDropdownOpen && (
+                    <View style={styles.networkButtonsContainer}>
                       <View style={styles.networkButtonsRow}>
                         <TouchableOpacity 
                           style={[
@@ -286,7 +220,8 @@ export default function CryptoModal({ visible, onClose, onSuccess }) {
                           </Text>
                         </TouchableOpacity>
                       </View>
-                    </Animated.View>
+                    </View>
+                    )}
                   </View>
                 </View>
 
@@ -457,10 +392,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     backgroundColor: '#131313',
     paddingHorizontal: 25,
-    overflow: 'hidden',
     marginTop: -10,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 23,
+    paddingBottom: 23,
   },
   methodButtonsRow: {
     flexDirection: 'row',
@@ -528,10 +464,11 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 15,
     backgroundColor: '#131313',
     paddingHorizontal: 25,
-    overflow: 'hidden',
     marginTop: -10,
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: 23,
+    paddingBottom: 23,
   },
   networkButtonsRow: {
     flexDirection: 'row',

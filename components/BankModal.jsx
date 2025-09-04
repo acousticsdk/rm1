@@ -99,9 +99,6 @@ export default function BankModal({ visible, onClose }) {
           {/* Header */}
           <View style={styles.header}>
             <View style={styles.handleBar} />
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>КОШЕЛЕК</Text>
-            </View>
           </View>
 
           <View style={styles.content}>

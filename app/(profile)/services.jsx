@@ -10,6 +10,7 @@ import {
 import { router } from 'expo-router';
 import { Minus, ChevronLeft } from 'lucide-react-native';
 import Button from '@/components/ui/Button';
+import DeleteServiceModal from '@/components/DeleteServiceModal';
 
 // Глобальные переменные для интеграции с бекендом
 let SERVICES_LIST = [];
@@ -60,6 +61,8 @@ const SERVICES_PER_PAGE = 5;
 export default function ServicesScreen() {
   const [services, setServices] = useState(MOCK_SERVICES);
   const [currentPage, setCurrentPage] = useState(1);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [serviceToDelete, setServiceToDelete] = useState(null);
 
   const handleBack = () => {
     router.back();
@@ -76,9 +79,26 @@ export default function ServicesScreen() {
   };
 
   const handleDeleteService = (serviceId) => {
-    setServices(prevServices => prevServices.filter(s => s.id !== serviceId));
-    // Обновляем глобальную переменную
-    SERVICES_LIST = services.filter(s => s.id !== serviceId);
+    // Находим услугу для удаления
+    const serviceToDelete = services.find(s => s.id === serviceId);
+    setServiceToDelete(serviceToDelete);
+    setDeleteModalVisible(true);
+  };
+
+  const handleConfirmDelete = () => {
+    if (serviceToDelete) {
+      setServices(prevServices => prevServices.filter(s => s.id !== serviceToDelete.id));
+      // Обновляем глобальную переменную
+      SERVICES_LIST = services.filter(s => s.id !== serviceToDelete.id);
+      
+      // Если на текущей странице не осталось услуг, переходим на предыдущую
+      const newServices = services.filter(s => s.id !== serviceToDelete.id);
+      const newTotalPages = Math.ceil(newServices.length / SERVICES_PER_PAGE);
+      if (currentPage > newTotalPages && newTotalPages > 0) {
+        setCurrentPage(newTotalPages);
+      }
+    }
+    setServiceToDelete(null);
   };
 
   const handlePagePress = (page) => {
@@ -176,6 +196,14 @@ export default function ServicesScreen() {
             variant="primary"
           />
         </View>
+        
+        {/* Delete Service Modal */}
+        <DeleteServiceModal
+          visible={deleteModalVisible}
+          onClose={() => setDeleteModalVisible(false)}
+          onConfirm={handleConfirmDelete}
+          serviceName={serviceToDelete?.title}
+        />
       </View>
     </ImageBackground>
   );

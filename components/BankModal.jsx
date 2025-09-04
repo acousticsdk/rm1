@@ -221,7 +221,6 @@ export default function BankModal({ visible, onClose }) {
       <FinancialManagerModal
         visible={financialManagerModalVisible}
         onClose={() => setFinancialManagerModalVisible(false)}
-        onComplete={onClose}
       />
     </Modal>
   );

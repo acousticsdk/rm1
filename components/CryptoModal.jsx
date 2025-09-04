@@ -9,7 +9,8 @@ import {
   ImageBackground,
   TouchableWithoutFeedback,
   Keyboard,
-  Platform
+  Platform,
+  ScrollView
 } from 'react-native';
 import { ChevronDown } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';

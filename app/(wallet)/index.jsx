@@ -7,15 +7,13 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
-  Modal,
-  TextInput,
   ImageBackground
 } from 'react-native';
 import { ChevronLeft, ChevronRight } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Svg, { Text as SvgText, Defs, LinearGradient as SvgLinearGradient, Stop } from 'react-native-svg';
 import { BankIcon, CryptoIcon } from '../../components/ui/Icons';
-import Button from '../../components/ui/Button';
+import BankModal from '../../components/BankModal';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -28,9 +26,6 @@ let WALLET_TEAM_MEMBERS = [];
 let WALLET_RECENT_TRANSACTIONS = [];
 let WALLET_TEAM_START_INDEX = 0;
 
-// Глобальные переменные для банковской модалки
-let BANK_SELECTED_CURRENCY = 'EURO';
-let BANK_WITHDRAWAL_AMOUNT = '900';
 // Моковые данные команды
 const MOCK_TEAM = [
   {
@@ -102,8 +97,6 @@ export default function WalletScreen() {
   const [transactions] = useState(MOCK_TRANSACTIONS);
   const [teamStartIndex, setTeamStartIndex] = useState(0);
   const [bankModalVisible, setBankModalVisible] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState('EURO');
-  const [withdrawalAmount, setWithdrawalAmount] = useState('900');
 
   const handleBankWithdraw = () => {
     setBankModalVisible(true);
@@ -115,22 +108,6 @@ export default function WalletScreen() {
   };
 
   const handleBankModalClose = () => {
-    setBankModalVisible(false);
-  };
-
-  const handleCurrencySelect = (currency) => {
-    setSelectedCurrency(currency);
-    BANK_SELECTED_CURRENCY = currency;
-  };
-
-  const handleAmountChange = (amount) => {
-    setWithdrawalAmount(amount);
-    BANK_WITHDRAWAL_AMOUNT = amount;
-  };
-
-  const handleContinue = () => {
-    // TODO: Логика продолжения операции
-    console.log(`Вывод ${withdrawalAmount} ${selectedCurrency}`);
     setBankModalVisible(false);
   };
 
@@ -330,122 +307,8 @@ export default function WalletScreen() {
 
         <View style={styles.bottomSpacing} />
       </ScrollView>
-
-      {/* Bank Modal */}
-      <Modal
-        visible={bankModalVisible}
-        animationType="slide"
-        transparent={true}
-        onRequestClose={handleBankModalClose}
-      >
-        <ImageBackground 
-          source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
-          style={styles.modalBackgroundImage}
-          resizeMode="cover"
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalHeader}>
-              <View style={styles.modalHandleBar} />
-              <View style={styles.modalTitleContainer}>
-                <Text style={styles.modalTitle}>ВЫВОД</Text>
-              </View>
-            </View>
-
-            <View style={styles.bankSection}>
-              <View style={styles.bankTitleContainer}>
-                <Text style={styles.bankTitle}>БАНК</Text>
-              </View>
-
-              <View style={styles.currencySection}>
-                <Text style={styles.currencyLabel}>Валюта</Text>
-                
-                <TouchableOpacity style={styles.currencyDropdown}>
-                  <Text style={styles.currencyDropdownText}>Выберите валюту</Text>
-                  <View style={styles.currencyDropdownIcon}>
-                    <View style={styles.triangleUp} />
-                  </View>
-                </TouchableOpacity>
-
-                <View style={styles.currencyButtons}>
-                  <TouchableOpacity 
-                    style={[
-                      styles.currencyButton,
-                      selectedCurrency === 'EURO' && styles.currencyButtonActive
-                    ]}
-                    onPress={() => handleCurrencySelect('EURO')}
-                  >
-                    <Text style={[
-                      styles.currencyButtonText,
-                      selectedCurrency === 'EURO' && styles.currencyButtonTextActive
-                    ]}>
-                      EURO
-                    </Text>
-                  </TouchableOpacity>
-                  
-                  <TouchableOpacity 
-                    style={[
-                      styles.currencyButton,
-                      selectedCurrency === 'USD' && styles.currencyButtonActive
-                    ]}
-                    onPress={() => handleCurrencySelect('USD')}
-                  >
-                    <Text style={[
-                      styles.currencyButtonText,
-                      selectedCurrency === 'USD' && styles.currencyButtonTextActive
-                    ]}>
-                      USD
-                    </Text>
-                  </TouchableOpacity>
-                  
-                  <TouchableOpacity 
-                    style={[
-                      styles.currencyButton,
-                      selectedCurrency === 'RUB' && styles.currencyButtonActive
-                    ]}
-                    onPress={() => handleCurrencySelect('RUB')}
-                  >
-                    <Text style={[
-                      styles.currencyButtonText,
-                      selectedCurrency === 'RUB' && styles.currencyButtonTextActive
-                    ]}>
-                      RUB
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-
-              <View style={styles.amountSection}>
-                <Text style={styles.amountLabel}>Сумма</Text>
-                <View style={styles.amountInputContainer}>
-                  <LinearGradient
-                    colors={['#28CEFF', '#0066FF']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 0 }}
-                    style={styles.amountInputGradient}
-                  >
-                    <TextInput
-                      style={styles.amountInput}
-                      value={withdrawalAmount}
-                      onChangeText={handleAmountChange}
-                      placeholder="0"
-                      placeholderTextColor="#FFFFFF80"
-                      keyboardType="numeric"
-                    />
-                  </LinearGradient>
-                </View>
-              </View>
-            </View>
-
-            <View style={styles.continueButtonContainer}>
-              <Button
-                title="Продолжить"
-                onPress={handleContinue}
-                variant="primary"
-              />
-            </View>
-          </View>
-        </ImageBackground>
-      </Modal>
+        onClose={handleBankModalClose}
+      />
     </ImageBackground>
   );
 }
@@ -704,161 +567,5 @@ const styles = StyleSheet.create({
   },
   bottomSpacing: {
     height: 120,
-  },
-  modalBackgroundImage: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    backgroundColor: '#070707',
-  },
-  modalContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-  },
-  modalHeader: {
-    alignItems: 'center',
-    paddingTop: 20,
-    paddingBottom: 30,
-  },
-  modalHandleBar: {
-    width: 40,
-    height: 4,
-    backgroundColor: '#666666',
-    borderRadius: 2,
-    marginBottom: 20,
-  },
-  modalTitleContainer: {
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
-    borderRadius: 50,
-    paddingHorizontal: 30,
-    paddingVertical: 12,
-    backgroundColor: '#000000',
-  },
-  modalTitle: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontFamily: 'Benzin-Bold',
-    letterSpacing: 2,
-  },
-  bankSection: {
-    paddingHorizontal: 24,
-    flex: 1,
-  },
-  bankTitleContainer: {
-    alignItems: 'center',
-    marginBottom: 40,
-  },
-  bankTitle: {
-    color: '#FFFFFF',
-    fontSize: 24,
-    fontFamily: 'Codec-Pro-Bold',
-    borderWidth: 2,
-    borderColor: '#FFFFFF',
-    borderRadius: 50,
-    paddingHorizontal: 40,
-    paddingVertical: 15,
-    backgroundColor: 'transparent',
-  },
-  currencySection: {
-    marginBottom: 40,
-  },
-  currencyLabel: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontFamily: 'Codec-Pro-Bold',
-    marginBottom: 15,
-  },
-  currencyDropdown: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#131313',
-    borderWidth: 1,
-    borderColor: '#444444',
-    borderRadius: 15,
-    paddingHorizontal: 25,
-    paddingVertical: 18,
-    marginBottom: 20,
-  },
-  currencyDropdownText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontFamily: 'Codec-Pro-News',
-  },
-  currencyDropdownIcon: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  triangleUp: {
-    width: 0,
-    height: 0,
-    borderLeftWidth: 6,
-    borderRightWidth: 6,
-    borderBottomWidth: 8,
-    borderLeftColor: 'transparent',
-    borderRightColor: 'transparent',
-    borderBottomColor: '#666666',
-  },
-  currencyButtons: {
-    flexDirection: 'row',
-    backgroundColor: '#131313',
-    borderWidth: 1,
-    borderColor: '#444444',
-    borderRadius: 25,
-    padding: 8,
-    gap: 8,
-  },
-  currencyButton: {
-    flex: 1,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    borderRadius: 20,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  currencyButtonActive: {
-    backgroundColor: '#0066FF',
-  },
-  currencyButtonText: {
-    color: '#666666',
-    fontSize: 16,
-    fontFamily: 'Codec-Pro-Bold',
-  },
-  currencyButtonTextActive: {
-    color: '#FFFFFF',
-  },
-  amountSection: {
-    marginBottom: 60,
-  },
-  amountLabel: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    fontFamily: 'Codec-Pro-Bold',
-    marginBottom: 15,
-  },
-  amountInputContainer: {
-    borderRadius: 25,
-    overflow: 'hidden',
-  },
-  amountInputGradient: {
-    padding: 2,
-    borderRadius: 25,
-  },
-  amountInput: {
-    backgroundColor: '#0066FF',
-    borderRadius: 25,
-    paddingHorizontal: 25,
-    paddingVertical: 20,
-    color: '#FFFFFF',
-    fontSize: 32,
-    fontFamily: 'Codec-Pro-Bold',
-    textAlign: 'left',
-  },
-  continueButtonContainer: {
-    position: 'absolute',
-    bottom: 40,
-    left: 24,
-    right: 24,
   },
 });

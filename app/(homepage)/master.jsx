@@ -209,7 +209,7 @@ export default function MasterHomepage() {
               onPress={() => handleTabPress('marketplace')}
             >
               <View style={styles.marketplaceIconContainer}>
-                <MarketplaceIcon size={Platform.OS === 'web' ? 60 : 40} color="#666666" />
+                <MarketplaceIcon size={Platform.OS === 'web' ? 60 : 24} color="#666666" />
               </View>
             </TouchableOpacity>
 
@@ -451,8 +451,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   marketplaceIconContainer: {
-    width: Platform.OS === 'web' ? 60 : 30,
-    height: Platform.OS === 'web' ? 60 : 30,
+    width: Platform.OS === 'web' ? 60 : 24,
+    height: Platform.OS === 'web' ? 60 : 24,
     alignItems: 'center',
     justifyContent: 'center',
   },

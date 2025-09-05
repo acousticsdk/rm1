@@ -300,7 +300,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   producerCard: {
-    backgroundColor: '#1a1a1a',
+    backgroundColor: '#070707',
     borderRadius: 25,
     padding: 24,
     borderWidth: 1,
@@ -328,13 +328,13 @@ const styles = StyleSheet.create({
   },
   producerName: {
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'Codec-Pro-Bold',
     marginBottom: 4,
   },
   producerLaunches: {
     color: '#787878',
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: 'Codec-Pro-News',
   },
   producerRating: {
@@ -346,6 +346,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 18,
     fontFamily: 'Codec-Pro-Bold',
+    marginTop: 3,
   },
   priceSection: {
     marginBottom: 20,
@@ -364,6 +365,7 @@ const styles = StyleSheet.create({
   actionButtons: {
     flexDirection: 'row',
     gap: 16,
+    paddingBottom: 4,
   },
   selectButton: {
     flex: 1,

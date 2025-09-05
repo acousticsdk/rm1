@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { router } from 'expo-router';
 import { 
   View, 
   Text, 
@@ -57,10 +58,8 @@ export default function TariffModal({ visible, onClose, selectedTariff }) {
     // Обновляем глобальную переменную
     TARIFF_MODAL_SELECTED_PLAN = selectedPlan || selectedTariff?.id || '3month';
     
-    // TODO: Здесь будет логика оплаты
-    // Данные доступны в переменной: TARIFF_MODAL_SELECTED_PLAN
-    
-    console.log(`Оплата тарифа: ${TARIFF_MODAL_SELECTED_PLAN}`);
+    // Переходим на страницу выбора продюсера
+    router.push('/(profile)/producer-selection');
     onClose();
   };
 

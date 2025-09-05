@@ -18,6 +18,7 @@ export default function ProfileLayout() {
       <Stack.Screen name="services" />
       <Stack.Screen name="add-case" />
       <Stack.Screen name="full-tariffs" />
+      <Stack.Screen name="producer-selection" />
     </Stack>
   );
 }

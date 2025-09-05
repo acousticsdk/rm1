@@ -140,7 +140,12 @@ export default function TeamSelectionModal({ visible, onClose, onSuccess, projec
       </View>
 
       {/* Member Info - positioned at bottom */}
-      <View style={styles.memberInfoOverlay}>
+      <LinearGradient
+        colors={['transparent', 'rgba(0, 0, 0, 0.7)', 'rgba(0, 0, 0, 0.9)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.memberInfoOverlay}
+      >
         <View style={styles.memberInfo}>
           <Text style={styles.memberName}>{member.name}</Text>
           
@@ -157,7 +162,7 @@ export default function TeamSelectionModal({ visible, onClose, onSuccess, projec
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </LinearGradient>
     </View>
   );
 
@@ -312,7 +317,6 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    background: 'linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%)',
     paddingTop: 60,
   },
   memberInfo: {

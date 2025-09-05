@@ -821,7 +821,7 @@ const styles = StyleSheet.create({
   },
   userCard: {
     width: 240,
-    height: 280,
+    height: 230,
     borderRadius: 20,
     overflow: 'hidden',
     backgroundColor: '#1a1a1a',

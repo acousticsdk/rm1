@@ -131,51 +131,44 @@ export default function TeamSelectionModal({ visible, onClose, onSuccess, projec
 
   const renderTeamMember = (member) => (
     <View key={member.id} style={styles.memberCard}>
-      <View style={styles.memberImageContainer}>
-        <Image source={{ uri: member.avatar }} style={styles.memberAvatar} />
-        
-        {/* Rating */}
-        <View style={styles.memberRating}>
-          <Star size={12} color="#FFD700" fill="#FFD700" />
-          <Text style={styles.ratingText}>{member.rating}</Text>
-        </View>
-
-        {/* Heart Icon */}
-        <TouchableOpacity 
-          style={styles.heartButton}
-          onPress={() => handleFavoriteToggle(member.id)}
-        >
-          <Heart 
-            size={16} 
-            color={member.isFavorite ? "#EF4444" : "#666666"}
-            fill={member.isFavorite ? "#EF4444" : "transparent"}
-          />
-        </TouchableOpacity>
+      <Image source={{ uri: member.avatar }} style={styles.memberAvatar} />
+      
+      {/* Rating */}
+      <View style={styles.memberRating}>
+        <Star size={12} color="#FFD700" fill="#FFD700" />
+        <Text style={styles.ratingText}>{member.rating}</Text>
       </View>
 
-      {/* Member Info */}
-      <View style={styles.memberInfo}>
-        <Text style={styles.memberName}>{member.name}</Text>
-        <View style={styles.memberSpecialization}>
-          <Text style={styles.specializationText}>{member.specialization}</Text>
-        </View>
-      </View>
+      {/* Heart Icon */}
+      <TouchableOpacity 
+        style={styles.heartButton}
+        onPress={() => handleFavoriteToggle(member.id)}
+      >
+        <Heart 
+          size={16} 
+          color={member.isFavorite ? "#EF4444" : "#666666"}
+          fill={member.isFavorite ? "#EF4444" : "transparent"}
+        />
+      </TouchableOpacity>
 
-      {/* Action Buttons */}
-      <View style={styles.memberActions}>
-        <TouchableOpacity 
-          style={styles.contractButton}
-          onPress={() => handleContract(member.id)}
-        >
-          <Text style={styles.contractButtonText}>Договор</Text>
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={styles.hireButton}
-          onPress={() => handleHire(member.id)}
-        >
-          <Text style={styles.hireButtonText}>Нанять</Text>
-        </TouchableOpacity>
+      {/* Member Info - positioned at bottom */}
+      <View style={styles.memberInfoOverlay}>
+        <View style={styles.memberInfo}>
+          <Text style={styles.memberName}>{member.name}</Text>
+          
+          <View style={styles.memberActions}>
+            <View style={styles.memberSpecialization}>
+              <Text style={styles.specializationText}>{member.specialization}</Text>
+            </View>
+            
+            <TouchableOpacity 
+              style={styles.hireButton}
+              onPress={() => handleHire(member.id)}
+            >
+              <Text style={styles.hireButtonText}>Нанять</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -293,102 +286,98 @@ const styles = StyleSheet.create({
   },
   memberCard: {
     flex: 1,
-    backgroundColor: '#131313',
+    height: 280,
     borderRadius: 20,
-    padding: 16,
-    borderWidth: 1,
-    borderColor: '#333333',
-    alignItems: 'center',
-  },
-  memberImageContainer: {
+    overflow: 'hidden',
+    backgroundColor: '#1a1a1a',
     position: 'relative',
-    marginBottom: 12,
   },
   memberAvatar: {
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-    backgroundColor: '#333333',
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   memberRating: {
     position: 'absolute',
-    top: -5,
-    left: -5,
+    top: 12,
+    left: 12,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    borderRadius: 10,
-    paddingHorizontal: 6,
-    paddingVertical: 3,
-    gap: 3,
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    gap: 4,
   },
   ratingText: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: 'Codec-Pro-Bold',
+    marginTop: 4,
   },
   heartButton: {
     position: 'absolute',
-    top: -5,
-    right: -5,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
+    top: 12,
+    right: 12,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     backgroundColor: 'rgba(0, 0, 0, 0.8)',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  memberInfoOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    paddingTop: 40,
+  },
   memberInfo: {
-    alignItems: 'center',
-    marginBottom: 12,
+    padding: 16,
   },
   memberName: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 18,
     fontFamily: 'Codec-Pro-Bold',
-    textAlign: 'center',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   memberSpecialization: {
     backgroundColor: '#0066FF',
     borderRadius: 12,
-    paddingHorizontal: 12,
-    paddingVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    flex: 1,
+    alignItems: 'center',
+    marginRight: 8,
   },
   specializationText: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 11,
     fontFamily: 'Codec-Pro-Bold',
   },
   memberActions: {
     flexDirection: 'row',
-    gap: 8,
-    width: '100%',
-  },
-  contractButton: {
-    flex: 1,
-    backgroundColor: '#333333',
-    borderRadius: 15,
-    paddingVertical: 8,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  contractButtonText: {
-    color: '#FFFFFF',
-    fontSize: 10,
-    fontFamily: 'Codec-Pro-Bold',
+    justifyContent: 'space-between',
   },
   hireButton: {
     flex: 1,
     backgroundColor: '#0066FF',
-    borderRadius: 15,
+    borderRadius: 12,
     paddingVertical: 8,
     alignItems: 'center',
     justifyContent: 'center',
   },
   hireButtonText: {
     color: '#FFFFFF',
-    fontSize: 10,
+    fontSize: 11,
     fontFamily: 'Codec-Pro-Bold',
   },
   closeButtonContainer: {

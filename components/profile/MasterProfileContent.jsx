@@ -28,7 +28,7 @@ const MENU_ITEMS = [
   {
     id: 'tariffs',
     title: 'Тарифы',
-    route: '/(profile)/tariffs-landing',
+    route: '/(profile)/full-tariffs',
     gradient: ['#0066FF', '#0088FF'],
     hasIcon: true
   },

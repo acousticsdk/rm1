@@ -325,7 +325,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   memberSpecialization: {
-    backgroundColor: '#0066FF',
+    backgroundColor: '#FFFFFF',
     borderRadius: 12,
     paddingHorizontal: 8,
     paddingVertical: 8,
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
   specializationText: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 11,
     fontFamily: 'Codec-Pro-Bold',
   },

@@ -7,7 +7,7 @@ export default function ProfileLayout() {
       contentStyle: { backgroundColor: '#070707' }
     }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="tariffs" />
+      <Stack.Screen name="tariffs-landing" />
       <Stack.Screen name="referral" />
       <Stack.Screen name="analytics" />
       <Stack.Screen name="personal-info" />

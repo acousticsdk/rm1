@@ -42,16 +42,21 @@ export default function AITeamBuildingModal({ visible, onClose, onSuccess }) {
 
   const handleTeamSelectionClose = () => {
     setTeamSelectionVisible(false);
-    // Закрываем основную модалку
-    onClose();
+    // Небольшая задержка для корректного закрытия на мобильных
+    setTimeout(() => {
+      onClose();
+    }, 100);
   };
 
   const handleTeamSelectionSuccess = (title, message) => {
     setTeamSelectionVisible(false);
-    onClose();
-    if (onSuccess) {
-      onSuccess(title, message);
-    }
+    // Небольшая задержка для корректного закрытия на мобильных
+    setTimeout(() => {
+      onClose();
+      if (onSuccess) {
+        onSuccess(title, message);
+      }
+    }, 100);
   };
 
   return (

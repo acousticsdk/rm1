@@ -123,7 +123,10 @@ export default function TeamSelectionModal({ visible, onClose, onSuccess, projec
       onSuccess('Команда подобрана!', 'ИИ успешно подобрал команду для вашего проекта');
     }
     
-    onClose();
+    // Небольшая задержка для корректного закрытия на мобильных
+    setTimeout(() => {
+      onClose();
+    }, 100);
   };
 
   const renderTeamMember = (member) => (

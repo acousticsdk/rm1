@@ -92,11 +92,19 @@ export default function MasterHomepage() {
   };
 
   const handleAITeamModalClose = () => {
+    // Полностью сбрасываем состояние модалки
     setAiTeamModalVisible(false);
+    // Принудительно обновляем состояние для мобильных
+    setTimeout(() => {
+      setAiTeamModalVisible(false);
+    }, 50);
   };
 
   const handleAITeamSuccess = (title, message) => {
+    // Сначала показываем уведомление
     showSuccess(title, message);
+    // Затем полностью закрываем модалку
+    setAiTeamModalVisible(false);
   };
 
   return (

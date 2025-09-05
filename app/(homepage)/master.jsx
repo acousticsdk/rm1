@@ -207,7 +207,9 @@ export default function MasterHomepage() {
               style={styles.tabItem}
               onPress={() => handleTabPress('marketplace')}
             >
-              <MarketplaceIcon size={24} color="#666666" />
+              <View style={styles.marketplaceIconContainer}>
+                <MarketplaceIcon size={24} color="#666666" />
+              </View>
             </TouchableOpacity>
 
             {/* Wallet Tab */}
@@ -446,5 +448,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Codec-Pro-Bold',
     textAlign: 'center',
+  },
+  marketplaceIconContainer: {
+    width: 24,
+    height: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

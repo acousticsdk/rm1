@@ -262,6 +262,59 @@ export default function MarketplaceScreen() {
     return MOCK_USERS.filter(user => user.category === category);
   };
 
+  // Функция для фильтрации пользователей по поисковому запросу
+  const getFilteredUsers = () => {
+    if (!searchQuery.trim()) {
+      return [];
+    }
+    
+    return MOCK_USERS.filter(user => 
+      user.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      user.specialization.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
+  // Рендер карточки пользователя для поиска (как в ИИ сборе команды)
+  const renderSearchUserCard = (user) => (
+    <View key={user.id} style={styles.searchUserCard}>
+      <Image
+        source={{ uri: user.avatar }}
+        style={styles.searchUserAvatar}
+      />
+      
+      {/* Rating */}
+      <View style={styles.searchUserRating}>
+        <Star size={12} color="#FFD700" fill="#FFD700" />
+        <Text style={styles.searchRatingText}>{user.rating}</Text>
+      </View>
+
+      {/* User Info - positioned at bottom */}
+      <LinearGradient
+        colors={['transparent', 'rgba(0, 0, 0, 0.7)', 'rgba(0, 0, 0, 0.9)']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 0, y: 1 }}
+        style={styles.searchUserInfoOverlay}
+      >
+        <View style={styles.searchUserInfo}>
+          <Text style={styles.searchUserName}>{user.name}</Text>
+          
+          <View style={styles.searchUserActions}>
+            <View style={styles.searchUserSpecialization}>
+              <Text style={styles.searchSpecializationText}>{user.specialization}</Text>
+            </View>
+            
+            <TouchableOpacity 
+              style={styles.searchHireButton}
+              onPress={() => handleHireUser(user.id)}
+            >
+              <Text style={styles.searchHireButtonText}>Нанять</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </LinearGradient>
+    </View>
+  );
+
   const renderUserCard = ({ item, index }) => {
     // Получаем название категории для отображения
     const getCategoryName = (categoryId) => {
@@ -446,6 +499,47 @@ export default function MarketplaceScreen() {
     );
   };
 
+  // Рендер результатов поиска
+  const renderSearchResults = () => {
+    const filteredUsers = getFilteredUsers();
+    
+    if (searchQuery.trim() && filteredUsers.length === 0) {
+      return (
+        <View style={styles.noResultsContainer}>
+          <Text style={styles.noResultsText}>
+            Ничего не найдено по запросу «{searchQuery}»
+          </Text>
+        </View>
+      );
+    }
+    
+    if (searchQuery.trim() && filteredUsers.length > 0) {
+      return (
+        <View style={styles.searchResultsContainer}>
+          <Text style={styles.searchResultsTitle}>
+            По запросу «{searchQuery}» найдено {filteredUsers.length} специалистов
+          </Text>
+          
+          <View style={styles.searchResultsGrid}>
+            {filteredUsers.map((user, index) => {
+              if (index % 2 === 0) {
+                const nextUser = filteredUsers[index + 1];
+                return (
+                  <View key={`row-${index}`} style={styles.searchResultsRow}>
+                    {renderSearchUserCard(user)}
+                    {nextUser && renderSearchUserCard(nextUser)}
+                  </View>
+                );
+              }
+              return null;
+            })}
+          </View>
+        </View>
+      );
+    }
+    
+    return null;
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -499,6 +593,12 @@ export default function MarketplaceScreen() {
             ))}
           </View>
 
+          {/* Search Results */}
+          {renderSearchResults()}
+
+          {/* Categories and Sections - hide when searching */}
+          {!searchQuery.trim() && (
+            <>
           {/* Categories Header */}
           <View style={styles.categoriesHeader}>
             <Text style={styles.categoriesTitle}>Категории</Text>
@@ -534,6 +634,8 @@ export default function MarketplaceScreen() {
           {renderCategorySection('ads', 'РЕКЛАМА', adsExpanded, () => setAdsExpanded(!adsExpanded))}
           {renderCategorySection('photo', 'ДЛЯ СЪЕМКИ', photoExpanded, () => setPhotoExpanded(!photoExpanded))}
           {renderCategorySection('it', 'IT', itExpanded, () => setItExpanded(!itExpanded))}
+            </>
+          )}
 
           <View style={styles.bottomSpacing} />
         </ScrollView>
@@ -816,5 +918,118 @@ const styles = StyleSheet.create({
   },
   categoriesSpacing: {
     height: 20,
+  },
+  // Стили для результатов поиска
+  noResultsContainer: {
+    paddingHorizontal: 24,
+    paddingVertical: 60,
+    alignItems: 'center',
+  },
+  noResultsText: {
+    color: '#666666',
+    fontSize: 16,
+    fontFamily: 'Codec-Pro-News',
+    textAlign: 'center',
+  },
+  searchResultsContainer: {
+    paddingHorizontal: 24,
+    marginBottom: 30,
+  },
+  searchResultsTitle: {
+    color: '#666666',
+    fontSize: 16,
+    fontFamily: 'Codec-Pro-News',
+    textAlign: 'center',
+    marginBottom: 20,
+  },
+  searchResultsGrid: {
+    gap: 16,
+  },
+  searchResultsRow: {
+    flexDirection: 'row',
+    gap: 16,
+  },
+  searchUserCard: {
+    flex: 1,
+    height: 280,
+    borderRadius: 20,
+    overflow: 'hidden',
+    backgroundColor: '#1a1a1a',
+    position: 'relative',
+  },
+  searchUserAvatar: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  searchUserRating: {
+    position: 'absolute',
+    top: 12,
+    left: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    gap: 4,
+  },
+  searchRatingText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontFamily: 'Codec-Pro-Bold',
+    marginTop: 4,
+  },
+  searchUserInfoOverlay: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    paddingTop: 60,
+  },
+  searchUserInfo: {
+    padding: 16,
+  },
+  searchUserName: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: 'Codec-Pro-Bold',
+    marginBottom: 8,
+  },
+  searchUserActions: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  searchUserSpecialization: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    flex: 1,
+    alignItems: 'center',
+    marginRight: 8,
+  },
+  searchSpecializationText: {
+    color: '#000000',
+    fontSize: 11,
+    fontFamily: 'Codec-Pro-Bold',
+  },
+  searchHireButton: {
+    flex: 1,
+    backgroundColor: '#0066FF',
+    borderRadius: 12,
+    paddingVertical: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  searchHireButtonText: {
+    color: '#FFFFFF',
+    fontSize: 11,
+    fontFamily: 'Codec-Pro-Bold',
   },
 });

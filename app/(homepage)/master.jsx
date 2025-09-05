@@ -16,6 +16,9 @@ import { MessageCircle, Store, Wallet, User } from 'lucide-react-native';
 import { Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { HomeIcon, ChatIcon, MarketplaceIcon, WalletIcon, ProfileIcon } from '@/components/ui/Icons';
+import AITeamBuildingModal from '@/components/AITeamBuildingModal';
+import Notification from '@/components/ui/Notification';
+import { useNotification } from '@/hooks/useNotification';
 
 const { width: screenWidth } = Dimensions.get('window');
 
@@ -59,10 +62,12 @@ export default function MasterHomepage() {
   const [invitedCount] = useState(HOMEPAGE_INVITED_COUNT);
   const [earnings] = useState(HOMEPAGE_EARNINGS);
   const [avatarUrl] = useState(HOMEPAGE_AVATAR_URL);
+  const [aiTeamModalVisible, setAiTeamModalVisible] = useState(false);
+  const { notification, showSuccess, hideNotification } = useNotification();
 
   const handleBuildTeam = () => {
-    // Переходим на маркетплейс для сбора команды
-    router.push('/(marketplace)');
+    // Открываем модалку ИИ сбора команды
+    setAiTeamModalVisible(true);
     console.log('Собрать команду');
   };
 
@@ -86,12 +91,27 @@ export default function MasterHomepage() {
     }
   };
 
+  const handleAITeamModalClose = () => {
+    setAiTeamModalVisible(false);
+  };
+
+  const handleAITeamSuccess = (title, message) => {
+    showSuccess(title, message);
+  };
+
   return (
     <ImageBackground 
       source={{ uri: 'https://alfacta.online/100k/main-bg.png' }}
       style={styles.backgroundImage}
       resizeMode="cover"
     >
+      <Notification
+        visible={notification.visible}
+        type={notification.type}
+        title={notification.title}
+        message={notification.message}
+        onHide={hideNotification}
+      />
       <SafeAreaView style={styles.safeArea}>
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
           {/* Header */}
@@ -231,6 +251,13 @@ export default function MasterHomepage() {
           </View>
         </View>
       </SafeAreaView>
+      
+      {/* AI Team Building Modal */}
+      <AITeamBuildingModal
+        visible={aiTeamModalVisible}
+        onClose={handleAITeamModalClose}
+        onSuccess={handleAITeamSuccess}
+      />
     </ImageBackground>
   );
 }

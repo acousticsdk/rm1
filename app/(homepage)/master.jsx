@@ -13,6 +13,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import { MessageCircle, Store, Wallet, User } from 'lucide-react-native';
+import { Platform } from 'react-native';
 import { BlurView } from 'expo-blur';
 import { HomeIcon, ChatIcon, MarketplaceIcon, WalletIcon, ProfileIcon } from '@/components/ui/Icons';
 
@@ -208,7 +209,7 @@ export default function MasterHomepage() {
               onPress={() => handleTabPress('marketplace')}
             >
               <View style={styles.marketplaceIconContainer}>
-                <MarketplaceIcon size={40} color="#666666" />
+                <MarketplaceIcon size={Platform.OS === 'web' ? 60 : 40} color="#666666" />
               </View>
             </TouchableOpacity>
 

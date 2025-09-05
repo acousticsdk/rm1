@@ -208,7 +208,7 @@ export default function MasterHomepage() {
               onPress={() => handleTabPress('marketplace')}
             >
               <View style={styles.marketplaceIconContainer}>
-                <MarketplaceIcon size={24} color="#666666" />
+                <MarketplaceIcon size={40} color="#666666" />
               </View>
             </TouchableOpacity>
 

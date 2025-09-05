@@ -450,8 +450,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   marketplaceIconContainer: {
-    width: 24,
-    height: 24,
+    width: 60,
+    height: 60,
     alignItems: 'center',
     justifyContent: 'center',
   },

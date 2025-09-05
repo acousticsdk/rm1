@@ -139,18 +139,6 @@ export default function TeamSelectionModal({ visible, onClose, onSuccess, projec
         <Text style={styles.ratingText}>{member.rating}</Text>
       </View>
 
-      {/* Heart Icon */}
-      <TouchableOpacity 
-        style={styles.heartButton}
-        onPress={() => handleFavoriteToggle(member.id)}
-      >
-        <Heart 
-          size={16} 
-          color={member.isFavorite ? "#EF4444" : "#666666"}
-          fill={member.isFavorite ? "#EF4444" : "transparent"}
-        />
-      </TouchableOpacity>
-
       {/* Member Info - positioned at bottom */}
       <View style={styles.memberInfoOverlay}>
         <View style={styles.memberInfo}>
@@ -319,24 +307,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Codec-Pro-Bold',
     marginTop: 4,
   },
-  heartButton: {
-    position: 'absolute',
-    top: 12,
-    right: 12,
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   memberInfoOverlay: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    paddingTop: 40,
+    background: 'linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 50%, transparent 100%)',
+    paddingTop: 60,
   },
   memberInfo: {
     padding: 16,
